@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Policy — InCynq</title>
+  <meta name="description" content="InCynq Cookie Policy — what cookies and session storage we use and why.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/inner.css">
+</head>
+<body>
+
+  <header class="nav-header" id="navHeader">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo" aria-label="InCynq home">
+        <img src="assets/q-logo.png" alt="" class="logo-img" aria-hidden="true">
+        <span class="logo-text">InCynq</span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="residents.html">Residents</a>
+        <a href="brands.html">Brands</a>
+        <a href="devices.html">Devices</a>
+        <a href="faq.html">FAQ</a>
+        <a href="install.html" class="nav-link-subtle">Install app</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="https://incynq.app" class="btn btn-primary nav-cta" target="_blank" rel="noopener">Join free</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="page-header">
+      <div class="container">
+        <p class="page-header-eyebrow">Legal</p>
+        <h1 class="page-header-headline">
+          Cookie<br>
+          <em>Policy.</em>
+        </h1>
+        <p class="page-header-sub">Last updated: May 2026</p>
+      </div>
+    </section>
+
+    <section class="section section-white">
+      <div class="container">
+        <div class="legal-body">
+
+          <h2>1. What are cookies?</h2>
+          <p>Cookies are small text files stored on your device when you use a website or app. They help the service remember who you are and how you like to use it.</p>
+          <p>This policy also covers <strong>browser session storage</strong> — a similar technology that works like a cookie but is automatically cleared the moment you close your browser tab. We use it for one specific purpose, explained below.</p>
+
+          <h2>2. Essential cookies — always on</h2>
+          <p>These cookies are required for InCynq to work. You cannot disable them — without them, you cannot log in or use the platform.</p>
+
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Cookie</th>
+                  <th>Purpose</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Session cookie</strong></td>
+                  <td>Keeps you logged in while you use the app</td>
+                  <td>Session — deleted when you close the browser</td>
+                </tr>
+                <tr>
+                  <td><strong>Auth token</strong></td>
+                  <td>Authenticates your account securely</td>
+                  <td>7 days, or until you log out</td>
+                </tr>
+                <tr>
+                  <td><strong>CSRF token</strong></td>
+                  <td>Protects your account against security attacks</td>
+                  <td>Session</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><strong>Legal basis:</strong> Necessary for contract performance — providing the service you signed up for.</p>
+
+          <h2>3. Functional cookies — optional</h2>
+          <p>These cookies remember your preferences so you don't have to set them every time. You can disable them in Settings.</p>
+
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Cookie</th>
+                  <th>Purpose</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Theme preference</strong></td>
+                  <td>Remembers your dark/light mode setting</td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td><strong>Grid status</strong></td>
+                  <td>Remembers your last grid status setting</td>
+                  <td>30 days</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><strong>Legal basis:</strong> Consent. You can withdraw consent at any time in Settings.</p>
+
+          <h2>4. Analytics session storage — brand content only</h2>
+          <p>To make sure brand analytics are accurate and not inflated by someone scrolling past the same post five times, we use browser session storage to deduplicate events within a single session.</p>
+
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Purpose</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>incynq_session_id</strong></td>
+                  <td>A random ID that groups events in the same session so one scroll-past counts as one impression, not many</td>
+                  <td>Session only — cleared when you close your tab</td>
+                </tr>
+                <tr>
+                  <td><strong>pv_* / pi_* / prv_*</strong></td>
+                  <td>One-time flags that mark "this brand post or profile has already been logged in this session"</td>
+                  <td>Session only — cleared when you close your tab</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Important things to know about this:</p>
+          <ul>
+            <li>This data <strong>never leaves your browser</strong></li>
+            <li>It is only used to decide whether to send an analytics event — it is not itself tracking data</li>
+            <li>It applies only to brand content — resident posts are never tracked</li>
+            <li>It contains no personal information, no browsing history, and no identifiers that could identify you</li>
+            <li>Everything is cleared automatically the moment you close your browser tab</li>
+          </ul>
+
+          <p><strong>Legal basis:</strong> Legitimate interest — providing brands with accurate, non-inflated analytics on their own content, while protecting individual user privacy.</p>
+
+          <h2>5. What we don't use</h2>
+          <ul>
+            <li>No third-party advertising cookies</li>
+            <li>No tracking pixels</li>
+            <li>No social media tracking cookies</li>
+            <li>No cross-site tracking of any kind</li>
+            <li>No analytics on resident posts — only brand content</li>
+          </ul>
+          <p>InCynq does not show ads from outside companies. The only sponsored content on InCynq comes from Second Life brands matched to your own chosen interests.</p>
+
+          <h2>6. Managing cookies</h2>
+          <p>You can manage functional cookies in Settings within the app. Essential cookies cannot be disabled as the service cannot function without them.</p>
+          <p>You can also manage cookies through your browser settings. Note that disabling essential cookies will log you out and prevent you from using the platform.</p>
+
+          <h2>7. Changes to this policy</h2>
+          <p>We may update this Cookie Policy from time to time. Changes will be posted here with an updated date.</p>
+
+          <h2>8. Contact</h2>
+          <p>Questions about cookies or this policy: <strong>privacy@incynq.net</strong></p>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo" aria-label="InCynq home">
+          <img src="assets/q-logo.png" alt="" class="logo-img" aria-hidden="true">
+          <span class="logo-text">InCynq</span>
+        </a>
+        <p class="footer-tagline">Connect with what matters.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <div class="footer-col">
+          <p class="footer-col-title">Platform</p>
+          <a href="residents.html">For residents</a>
+          <a href="brands.html">For brands</a>
+          <a href="devices.html">Inworld devices</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Legal</p>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="cookies.html">Cookie Policy</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Get started</p>
+          <a href="https://incynq.app" target="_blank" rel="noopener">Open the app</a>
+          <a href="https://incynq.app" target="_blank" rel="noopener">Create account</a>
+          <a href="install.html">Install on your phone</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 InCynq. Second Life is a trademark of Linden Research, Inc. InCynq is not affiliated with or endorsed by Linden Research.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
