@@ -245,7 +245,7 @@ body {
 
 /* Outer card */
 .hero-card {
-  background: var(--surface);
+  background: #ffffff;
   border-radius: var(--radius-xl);
   border: 1.5px solid var(--border);
   overflow: hidden;
