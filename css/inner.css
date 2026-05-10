@@ -870,3 +870,14 @@ details[open] .faq-chevron { transform: rotate(180deg); }
   color: var(--teal);
   font-weight: 700;
 }
+
+/* ── Scattered platforms ────────────────────────────────────── */
+.scattered-platforms{display:flex;flex-wrap:wrap;margin-bottom:32px;}
+.scat-plt{background:#f5f5f5;border:2px solid #e0e0e0;border-radius:999px;padding:9px 18px;font-size:15px;font-weight:600;color:#6a8090;margin:5px;}
+.scat-plt.strike{text-decoration:line-through;text-decoration-color:#c05050;text-decoration-thickness:2px;opacity:0.6;}
+
+.solution-card-big{background:#007a87;border-radius:var(--radius-xl);padding:40px 36px;}
+.sol-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:14px;}
+.sol-headline{font-family:'Manrope',sans-serif;font-size:52px;font-weight:800;line-height:1.0;letter-spacing:-0.035em;color:#fff;margin-bottom:16px;}
+.sol-amber{color:#f0a500;}
+.sol-body{font-family:'DM Sans',sans-serif;font-size:16px;color:rgba(255,255,255,0.65);line-height:1.65;font-weight:300;}
