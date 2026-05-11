@@ -143,6 +143,56 @@
 
 
     <!-- =========================================================
+         STAR RATING — auto-loads from Supabase surveys table
+    ========================================================= -->
+    <section class="section section-white rating-section" id="rating">
+      <div class="container rating-container">
+        <div id="rating-placeholder" class="rating-placeholder">
+          <p class="rating-placeholder-text">
+            ⭐ Be one of the first to rate InCynq — join the platform and have your say
+          </p>
+        </div>
+        <div id="rating-live" class="rating-live" style="display:none;">
+          <div class="rating-stars" id="rating-stars"></div>
+          <p class="rating-score" id="rating-score"></p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    (async () => {
+      try {
+        const res = await fetch(
+          'https://muzzjvegynsemlsbwggf.supabase.co/rest/v1/surveys?select=q6_stars&q6_stars=not.is.null',
+          {
+            headers: {
+              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI',
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI'
+            }
+          }
+        );
+        const data = await res.json();
+        if (!data || data.length === 0) return;
+
+        const avg = data.reduce((sum, r) => sum + r.q6_stars, 0) / data.length;
+        const count = data.length;
+
+        const full = Math.floor(avg);
+        const half = avg - full >= 0.25 && avg - full < 0.75 ? 1 : 0;
+        const empty = 5 - full - half;
+        const stars = '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+
+        document.getElementById('rating-stars').textContent = stars;
+        document.getElementById('rating-score').innerHTML =
+          'Rated <strong>' + avg.toFixed(1) + ' / 5</strong> by ' + count + ' InCynq ' + (count === 1 ? 'member' : 'members');
+
+        document.getElementById('rating-placeholder').style.display = 'none';
+        document.getElementById('rating-live').style.display = 'block';
+      } catch(e) {}
+    })();
+    </script>
+
+    <!-- =========================================================
          PROBLEM — "Sound familiar?"
     ========================================================= -->
     <section class="section section-white" id="problem">
@@ -362,60 +412,6 @@
         </div>
       </div>
     </section>
-
-
-    <!-- =========================================================
-         STAR RATING — auto-loads from Supabase surveys table
-    ========================================================= -->
-    <section class="section section-white rating-section" id="rating">
-      <div class="container rating-container">
-        <div id="rating-placeholder" class="rating-placeholder">
-          <p class="rating-placeholder-text">
-            ⭐ Be one of the first to rate InCynq — join the platform and have your say
-          </p>
-        </div>
-        <div id="rating-live" class="rating-live" style="display:none;">
-          <div class="rating-stars" id="rating-stars"></div>
-          <p class="rating-score" id="rating-score"></p>
-        </div>
-      </div>
-    </section>
-
-    <script>
-    (async () => {
-      try {
-        const res = await fetch(
-          'https://muzzjvegynsemlsbwggf.supabase.co/rest/v1/surveys?select=q6_stars&q6_stars=not.is.null',
-          {
-            headers: {
-              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI',
-              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI'
-            }
-          }
-        );
-        const data = await res.json();
-        if (!data || data.length === 0) return;
-
-        const avg = data.reduce((sum, r) => sum + r.q6_stars, 0) / data.length;
-        const count = data.length;
-
-        // Build stars (full, half, empty)
-        const full = Math.floor(avg);
-        const half = avg - full >= 0.25 && avg - full < 0.75 ? 1 : 0;
-        const empty = 5 - full - half;
-        const stars = '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
-
-        document.getElementById('rating-stars').textContent = stars;
-        document.getElementById('rating-score').innerHTML =
-          'Rated <strong>' + avg.toFixed(1) + ' / 5</strong> by ' + count + ' InCynq ' + (count === 1 ? 'member' : 'members');
-
-        document.getElementById('rating-placeholder').style.display = 'none';
-        document.getElementById('rating-live').style.display = 'block';
-      } catch(e) {
-        // Silently fail — placeholder stays visible
-      }
-    })();
-    </script>
 
 
     <!-- =========================================================
