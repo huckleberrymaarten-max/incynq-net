@@ -15,7 +15,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -365,25 +365,57 @@
 
 
     <!-- =========================================================
-         STAR RATING — shown once 50+ survey responses collected
-         Until then: placeholder shown
+         STAR RATING — auto-loads from Supabase surveys table
     ========================================================= -->
     <section class="section section-white rating-section" id="rating">
       <div class="container rating-container">
-        <!-- Placeholder — swap for real rating once first survey responses arrive -->
-        <div class="rating-placeholder">
+        <div id="rating-placeholder" class="rating-placeholder">
           <p class="rating-placeholder-text">
             ⭐ Be one of the first to rate InCynq — join the platform and have your say
           </p>
         </div>
-        <!-- Real rating (uncomment and populate once first responses arrive)
-        <div class="rating-live" style="display:none">
-          <div class="rating-stars">★★★★½</div>
-          <p class="rating-score">Rated <strong>4.6 / 5</strong> by our own members</p>
+        <div id="rating-live" class="rating-live" style="display:none;">
+          <div class="rating-stars" id="rating-stars"></div>
+          <p class="rating-score" id="rating-score"></p>
         </div>
-        -->
       </div>
     </section>
+
+    <script>
+    (async () => {
+      try {
+        const res = await fetch(
+          'https://muzzjvegynsemlsbwggf.supabase.co/rest/v1/surveys?select=q6_stars&q6_stars=not.is.null',
+          {
+            headers: {
+              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI',
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI'
+            }
+          }
+        );
+        const data = await res.json();
+        if (!data || data.length === 0) return;
+
+        const avg = data.reduce((sum, r) => sum + r.q6_stars, 0) / data.length;
+        const count = data.length;
+
+        // Build stars (full, half, empty)
+        const full = Math.floor(avg);
+        const half = avg - full >= 0.25 && avg - full < 0.75 ? 1 : 0;
+        const empty = 5 - full - half;
+        const stars = '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+
+        document.getElementById('rating-stars').textContent = stars;
+        document.getElementById('rating-score').innerHTML =
+          'Rated <strong>' + avg.toFixed(1) + ' / 5</strong> by ' + count + ' InCynq ' + (count === 1 ? 'member' : 'members');
+
+        document.getElementById('rating-placeholder').style.display = 'none';
+        document.getElementById('rating-live').style.display = 'block';
+      } catch(e) {
+        // Silently fail — placeholder stays visible
+      }
+    })();
+    </script>
 
 
     <!-- =========================================================
