@@ -364,7 +364,7 @@
               <!-- Subcategories -->
               <div class="form-group sub-group" id="sub-general">
                 <label class="form-label" for="sub_general_sel">Topic</label>
-                <select class="form-select" name="subcategory" id="sub_general_sel">
+                <select class="form-select" name="subcategory" id="sub_general_sel" disabled>
                   <option value="">— Choose a topic —</option>
                   <option value="Feedback">Feedback</option>
                   <option value="Other">Other</option>
@@ -373,7 +373,7 @@
 
               <div class="form-group sub-group" id="sub-bug">
                 <label class="form-label" for="sub_bug_sel">Which area?</label>
-                <select class="form-select" name="subcategory" id="sub_bug_sel">
+                <select class="form-select" name="subcategory" id="sub_bug_sel" disabled>
                   <option value="">— Choose an area —</option>
                   <option value="App / Feed">App / Feed</option>
                   <option value="Notifications">Notifications</option>
@@ -386,7 +386,7 @@
 
               <div class="form-group sub-group" id="sub-brand">
                 <label class="form-label" for="sub_brand_sel">What do you need help with?</label>
-                <select class="form-select" name="subcategory" id="sub_brand_sel">
+                <select class="form-select" name="subcategory" id="sub_brand_sel" disabled>
                   <option value="">— Choose a topic —</option>
                   <option value="Getting Started">Getting Started</option>
                   <option value="Team & Managers">Team &amp; Managers</option>
@@ -399,7 +399,7 @@
 
               <div class="form-group sub-group" id="sub-billing">
                 <label class="form-label" for="sub_billing_sel">What's the issue?</label>
-                <select class="form-select" name="subcategory" id="sub_billing_sel">
+                <select class="form-select" name="subcategory" id="sub_billing_sel" disabled>
                   <option value="">— Choose a topic —</option>
                   <option value="Top-up Issues">Top-up Issues</option>
                   <option value="Welcome Credit">Welcome Credit</option>
@@ -409,7 +409,7 @@
 
               <div class="form-group sub-group" id="sub-account">
                 <label class="form-label" for="sub_account_sel">What do you need help with?</label>
-                <select class="form-select" name="subcategory" id="sub_account_sel">
+                <select class="form-select" name="subcategory" id="sub_account_sel" disabled>
                   <option value="">— Choose a topic —</option>
                   <option value="Login & Password">Login &amp; Password</option>
                   <option value="Registration">Registration</option>
@@ -420,7 +420,7 @@
 
               <div class="form-group sub-group" id="sub-press">
                 <label class="form-label" for="sub_press_sel">Type of enquiry</label>
-                <select class="form-select" name="subcategory" id="sub_press_sel">
+                <select class="form-select" name="subcategory" id="sub_press_sel" disabled>
                   <option value="">— Choose a type —</option>
                   <option value="Media Enquiry">Media Enquiry</option>
                   <option value="Partnership Proposal">Partnership Proposal</option>
@@ -430,7 +430,7 @@
 
               <div class="form-group sub-group" id="sub-interest">
                 <label class="form-label" for="sub_interest_sel">What are you suggesting?</label>
-                <select class="form-select" name="subcategory" id="sub_interest_sel">
+                <select class="form-select" name="subcategory" id="sub_interest_sel" disabled>
                   <option value="">— Choose a type —</option>
                   <option value="New Category">New Category</option>
                   <option value="New Subcategory">New Subcategory</option>
@@ -557,7 +557,11 @@
     const selectedTags   = new Set();
 
     function hideAllSubs() {
-      document.querySelectorAll('.sub-group').forEach(el => el.classList.remove('visible'));
+      document.querySelectorAll('.sub-group').forEach(el => {
+        el.classList.remove('visible');
+        const sel = el.querySelector('select');
+        if (sel) { sel.disabled = true; sel.value = ''; }
+      });
     }
 
     function hideAllTags() {
@@ -571,7 +575,12 @@
       hideAllSubs();
       hideAllTags();
       const subId = categoryMap[categorySelect.value];
-      if (subId) document.getElementById(subId).classList.add('visible');
+      if (subId) {
+        const subEl = document.getElementById(subId);
+        subEl.classList.add('visible');
+        const sel = subEl.querySelector('select');
+        if (sel) sel.disabled = false;
+      }
       document.getElementById('email-subject').value =
         categorySelect.value ? `InCynq Contact — ${categorySelect.value}` : 'InCynq Contact Form';
     });
