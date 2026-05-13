@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — InCynq</title>
+  <meta name="description" content="Got a question? We'd love to hear from you. Get in touch with the InCynq team.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Contact Us — InCynq">
+  <meta property="og:description" content="Got a question? We'd love to hear from you. Get in touch with the InCynq team.">
+  <meta property="og:url" content="https://incynq.net/contact.html">
+  <meta property="og:type" content="website">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/inner.css">
+
+  <style>
+    /* ── Contact-specific styles only ───────────────────────── */
+
+    .info-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 56px;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .info-card .info-icon { font-size: 26px; margin-bottom: 10px; }
+
+    .info-card h3 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .info-card p {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .info-card a { color: var(--cyan); text-decoration: none; }
+
+    /* ── Form card ── */
+    .form-wrap {
+      max-width: 660px;
+      margin: 0 auto 96px;
+    }
+
+    .form-card {
+      background: #007a8a;
+      border: 1px solid #006575;
+      border-radius: 24px;
+      padding: 44px 40px;
+    }
+
+    .form-card h2 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+      color: #F4B942;
+    }
+
+    .form-intro {
+      font-size: 14px;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .form-group { margin-bottom: 20px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .label-opt {
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #ccdde3;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: #0A1A24;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: #9ab8c4; }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: #00B4C8;
+      box-shadow: 0 0 0 3px rgba(0,180,200,0.12);
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a7a8a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 44px;
+      cursor: pointer;
+    }
+
+    .form-select option { background: #ffffff; color: #0A1A24; }
+    .form-select option[value=""] { color: #9ab8c4; }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 150px;
+      line-height: 1.65;
+    }
+
+    .sub-group { display: none; }
+    .sub-group.visible { display: block; }
+
+    .tag-group {
+      display: none;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .tag-group.visible { display: flex; }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 100px;
+      border: 1px solid #ccdde3;
+      background: #ffffff;
+      color: #5a7a8a;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .tag-chip:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    .tag-chip.selected {
+      background: rgba(0,180,200,0.12);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .form-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.25);
+      margin: 28px 0;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 15px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, var(--cyan), #0095aa);
+      color: var(--bg);
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-top: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-submit:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
+    .btn-submit:active:not(:disabled) { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .form-status {
+      display: none;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 16px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .form-status.success {
+      display: block;
+      background: rgba(0,229,160,0.08);
+      border: 1px solid rgba(0,229,160,0.25);
+      color: #00e5a0;
+    }
+
+    .form-status.error {
+      display: block;
+      background: rgba(255,107,107,0.08);
+      border: 1px solid rgba(255,107,107,0.25);
+      color: #ff6b6b;
+    }
+
+    @media (max-width: 640px) {
+      .info-row { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .form-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav-header" id="navHeader">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo" aria-label="InCynq home">
+        <img src="assets/q-logo.png" alt="" class="logo-img" aria-hidden="true">
+        <span class="logo-text">InCynq</span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="residents.html">Residents</a>
+        <a href="brands.html">Brands</a>
+        <a href="devices.html">Devices</a>
+        <a href="faq.html">FAQ</a>
+        <a href="install.html" class="nav-link-subtle">Install app</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="https://incynq.app" class="btn btn-primary nav-cta" target="_blank" rel="noopener">Join free</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+      <div class="container">
+        <p class="page-header-eyebrow">Get in touch</p>
+        <h1 class="page-header-headline">
+          Talk to us.<br>
+          <em>We're listening.</em>
+        </h1>
+        <p class="page-header-sub">
+          Got a question, spotted something odd, or have a brilliant idea? We want to hear it. Every message lands with a real person — not a bot, not a ticket system.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- INFO CARDS -->
+    <section class="section section-white">
+      <div class="container">
+        <div class="info-row">
+
+          <div class="info-card">
+            <div class="info-icon">⚡</div>
+            <h3>Quick replies</h3>
+            <p>We aim to get back to you within 48 – 72 hours on working days.</p>
+          </div>
+
+          <div class="info-card">
+            <div class="info-icon">🙋</div>
+            <h3>Real humans</h3>
+            <p>Every message is read and answered by the InCynq team. Always.</p>
+          </div>
+
+          <div class="info-card">
+            <div class="info-icon">❓</div>
+            <h3>Already got an answer?</h3>
+            <p>Check our <a href="faq.html">FAQ</a> — you might find what you need right away.</p>
+          </div>
+
+        </div>
+
+        <!-- FORM -->
+        <div class="form-wrap">
+          <div class="form-card">
+
+            <h2>Send us a message</h2>
+            <p class="form-intro">Fill in the details below and we'll get back to you as soon as we can. The more detail, the faster we can help.</p>
+
+            <!-- !! Replace YOUR_FORM_ID with your Formspree form ID !! -->
+            <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+              <input type="hidden" name="_subject" id="email-subject" value="InCynq Contact Form">
+              <input type="hidden" name="selected_tags" id="selected-tags-hidden" value="">
+
+              <!-- Name + SL username -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="name">Your name</label>
+                  <input class="form-input" type="text" id="name" name="name" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="sl_username">SL username <span class="label-opt">(optional)</span></label>
+                  <input class="form-input" type="text" id="sl_username" name="sl_username" placeholder="e.g. maarten.huckleberry">
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="form-group">
+                <label class="form-label" for="email">Your email address</label>
+                <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" required>
+              </div>
+
+              <hr class="form-divider">
+
+              <!-- Category -->
+              <div class="form-group">
+                <label class="form-label" for="category">What's this about?</label>
+                <select class="form-select" id="category" name="category" required>
+                  <option value="">— Choose a category —</option>
+                  <option value="General">💬 General</option>
+                  <option value="Bug Report">🐛 Bug Report</option>
+                  <option value="Brand Support">🏷️ Brand Support</option>
+                  <option value="Billing & Wallet">💰 Billing &amp; Wallet</option>
+                  <option value="Account Help">👤 Account Help</option>
+                  <option value="Press & Partnerships">📣 Press &amp; Partnerships</option>
+                  <option value="Suggest an Interest">💡 Suggest an Interest</option>
+                </select>
+              </div>
+
+              <!-- Subcategories -->
+              <div class="form-group sub-group" id="sub-general">
+                <label class="form-label" for="sub_general_sel">Topic</label>
+                <select class="form-select" name="subcategory" id="sub_general_sel">
+                  <option value="">— Choose a topic —</option>
+                  <option value="Feedback">Feedback</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group sub-group" id="sub-bug">
+                <label class="form-label" for="sub_bug_sel">Which area?</label>
+                <select class="form-select" name="subcategory" id="sub_bug_sel">
+                  <option value="">— Choose an area —</option>
+                  <option value="App / Feed">App / Feed</option>
+                  <option value="Notifications">Notifications</option>
+                  <option value="Events">Events</option>
+                  <option value="Wallet & Payments">Wallet &amp; Payments</option>
+                  <option value="Profile & Settings">Profile &amp; Settings</option>
+                  <option value="Inworld Devices">Inworld Devices</option>
+                </select>
+              </div>
+
+              <div class="form-group sub-group" id="sub-brand">
+                <label class="form-label" for="sub_brand_sel">What do you need help with?</label>
+                <select class="form-select" name="subcategory" id="sub_brand_sel">
+                  <option value="">— Choose a topic —</option>
+                  <option value="Getting Started">Getting Started</option>
+                  <option value="Team & Managers">Team &amp; Managers</option>
+                  <option value="Analytics & Dashboard">Analytics &amp; Dashboard</option>
+                  <option value="Advertising">Advertising</option>
+                  <option value="Brand Wallet">Brand Wallet</option>
+                  <option value="Brand Verification">Brand Verification</option>
+                </select>
+              </div>
+
+              <div class="form-group sub-group" id="sub-billing">
+                <label class="form-label" for="sub_billing_sel">What's the issue?</label>
+                <select class="form-select" name="subcategory" id="sub_billing_sel">
+                  <option value="">— Choose a topic —</option>
+                  <option value="Top-up Issues">Top-up Issues</option>
+                  <option value="Welcome Credit">Welcome Credit</option>
+                  <option value="Transaction Query">Transaction Query</option>
+                </select>
+              </div>
+
+              <div class="form-group sub-group" id="sub-account">
+                <label class="form-label" for="sub_account_sel">What do you need help with?</label>
+                <select class="form-select" name="subcategory" id="sub_account_sel">
+                  <option value="">— Choose a topic —</option>
+                  <option value="Login & Password">Login &amp; Password</option>
+                  <option value="Registration">Registration</option>
+                  <option value="Deactivation & Deletion">Deactivation &amp; Deletion</option>
+                  <option value="Adult Verification">Adult Verification</option>
+                </select>
+              </div>
+
+              <div class="form-group sub-group" id="sub-press">
+                <label class="form-label" for="sub_press_sel">Type of enquiry</label>
+                <select class="form-select" name="subcategory" id="sub_press_sel">
+                  <option value="">— Choose a type —</option>
+                  <option value="Media Enquiry">Media Enquiry</option>
+                  <option value="Partnership Proposal">Partnership Proposal</option>
+                  <option value="Sponsorship">Sponsorship</option>
+                </select>
+              </div>
+
+              <div class="form-group sub-group" id="sub-interest">
+                <label class="form-label" for="sub_interest_sel">What are you suggesting?</label>
+                <select class="form-select" name="subcategory" id="sub_interest_sel">
+                  <option value="">— Choose a type —</option>
+                  <option value="New Category">New Category</option>
+                  <option value="New Subcategory">New Subcategory</option>
+                  <option value="New #Tag">New #Tag</option>
+                </select>
+              </div>
+
+              <!-- Tags -->
+              <div class="form-group" id="tags-group" style="display:none">
+                <label class="form-label">Relevant tags <span class="label-opt">(optional — select all that apply)</span></label>
+
+                <div class="tag-group" id="tags-bug-devices">
+                  <span class="tag-chip" data-tag="#ATM">#ATM</span>
+                  <span class="tag-chip" data-tag="#Terminal">#Terminal</span>
+                  <span class="tag-chip" data-tag="#ATM Wall">#ATM Wall</span>
+                </div>
+
+                <div class="tag-group" id="tags-brand-advertising">
+                  <span class="tag-chip" data-tag="#Ad not showing">#Ad not showing</span>
+                  <span class="tag-chip" data-tag="#Ad rejected">#Ad rejected</span>
+                  <span class="tag-chip" data-tag="#Targeting">#Targeting</span>
+                </div>
+
+                <div class="tag-group" id="tags-brand-wallet">
+                  <span class="tag-chip" data-tag="#Top-up">#Top-up</span>
+                  <span class="tag-chip" data-tag="#Refund request">#Refund request</span>
+                </div>
+
+                <div class="tag-group" id="tags-brand-verification">
+                  <span class="tag-chip" data-tag="#Cynqified">#Cynqified</span>
+                </div>
+
+                <div class="tag-group" id="tags-billing-transaction">
+                  <span class="tag-chip" data-tag="#Missing funds">#Missing funds</span>
+                  <span class="tag-chip" data-tag="#Double charge">#Double charge</span>
+                </div>
+              </div>
+
+              <hr class="form-divider">
+
+              <!-- Message -->
+              <div class="form-group">
+                <label class="form-label" for="message">Your message</label>
+                <textarea class="form-textarea" id="message" name="message" placeholder="Tell us what's on your mind. The more detail you give us, the faster we can help." required></textarea>
+              </div>
+
+              <button type="submit" class="btn-submit" id="submit-btn">Send message →</button>
+
+              <div class="form-status" id="status-msg"></div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo" aria-label="InCynq home">
+          <img src="assets/q-logo.png" alt="" class="logo-img" aria-hidden="true">
+          <span class="logo-text">InCynq</span>
+        </a>
+        <p class="footer-tagline">Connect with what matters.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <div class="footer-col">
+          <p class="footer-col-title">Platform</p>
+          <a href="residents.html">For residents</a>
+          <a href="brands.html">For brands</a>
+          <a href="devices.html">Inworld devices</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact us</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Legal</p>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="cookies.html">Cookie Policy</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Get started</p>
+          <a href="https://incynq.app" target="_blank" rel="noopener">Open the app</a>
+          <a href="https://incynq.app" target="_blank" rel="noopener">Create account</a>
+          <a href="install.html">Install on your phone</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 InCynq. Second Life is a trademark of Linden Research, Inc. InCynq is not affiliated with or endorsed by Linden Research.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <script>
+    const categoryMap = {
+      'General':              'sub-general',
+      'Bug Report':           'sub-bug',
+      'Brand Support':        'sub-brand',
+      'Billing & Wallet':     'sub-billing',
+      'Account Help':         'sub-account',
+      'Press & Partnerships': 'sub-press',
+      'Suggest an Interest':  'sub-interest',
+    };
+
+    const tagMap = {
+      'Inworld Devices':    'tags-bug-devices',
+      'Advertising':        'tags-brand-advertising',
+      'Brand Wallet':       'tags-brand-wallet',
+      'Brand Verification': 'tags-brand-verification',
+      'Transaction Query':  'tags-billing-transaction',
+    };
+
+    const categorySelect = document.getElementById('category');
+    const tagsGroup      = document.getElementById('tags-group');
+    const selectedTags   = new Set();
+
+    function hideAllSubs() {
+      document.querySelectorAll('.sub-group').forEach(el => el.classList.remove('visible'));
+    }
+
+    function hideAllTags() {
+      document.querySelectorAll('.tag-group').forEach(el => el.classList.remove('visible'));
+      tagsGroup.style.display = 'none';
+      selectedTags.clear();
+      document.getElementById('selected-tags-hidden').value = '';
+    }
+
+    categorySelect.addEventListener('change', () => {
+      hideAllSubs();
+      hideAllTags();
+      const subId = categoryMap[categorySelect.value];
+      if (subId) document.getElementById(subId).classList.add('visible');
+      document.getElementById('email-subject').value =
+        categorySelect.value ? `InCynq Contact — ${categorySelect.value}` : 'InCynq Contact Form';
+    });
+
+    document.querySelectorAll('.sub-group select').forEach(sel => {
+      sel.addEventListener('change', () => {
+        hideAllTags();
+        const tagGroupId = tagMap[sel.value];
+        if (tagGroupId) {
+          tagsGroup.style.display = 'block';
+          document.getElementById(tagGroupId).classList.add('visible');
+        }
+      });
+    });
+
+    document.querySelectorAll('.tag-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const tag = chip.dataset.tag;
+        if (selectedTags.has(tag)) {
+          selectedTags.delete(tag);
+          chip.classList.remove('selected');
+        } else {
+          selectedTags.add(tag);
+          chip.classList.add('selected');
+        }
+        document.getElementById('selected-tags-hidden').value =
+          Array.from(selectedTags).join(', ');
+      });
+    });
+
+    const form      = document.getElementById('contact-form');
+    const statusMsg = document.getElementById('status-msg');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      statusMsg.className = 'form-status';
+
+      try {
+        const res = await fetch(form.action, {
+          method:  'POST',
+          body:    new FormData(form),
+          headers: { 'Accept': 'application/json' },
+        });
+
+        if (res.ok) {
+          form.reset();
+          hideAllSubs();
+          hideAllTags();
+          statusMsg.className   = 'form-status success';
+          statusMsg.textContent = '✓ Message sent! We\'ll get back to you within 48 – 72 hours.';
+          submitBtn.textContent = 'Message sent ✓';
+        } else {
+          throw new Error('Server error');
+        }
+      } catch {
+        statusMsg.className   = 'form-status error';
+        statusMsg.textContent = 'Something went wrong — please try again or email us directly at support@incynq.net';
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Send message →';
+      }
+    });
+  </script>
+
+</body>
+</html>
