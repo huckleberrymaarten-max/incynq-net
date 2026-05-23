@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inworld Devices — InCynq</title>
+  <title>Terminals &amp; ATMs — InCynq</title>
   <meta name="description" content="Activate your InCynq account and top up your wallet without leaving Second Life. Meet the InCynq Terminal and ATM.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
       <nav class="nav-links" id="navLinks" aria-label="Main navigation">
         <a href="residents.html">Residents</a>
         <a href="brands.html">Brands</a>
-        <a href="devices.html" class="nav-active">Devices</a>
+        <a href="devices.html" class="nav-active">Terminals &amp; ATMs</a>
         <a href="faq.html">FAQ</a>
         <a href="install.html" class="nav-link-subtle">Install app</a>
       </nav>
@@ -39,7 +39,7 @@
 
     <section class="page-header">
       <div class="container">
-        <p class="page-header-eyebrow">Inworld devices</p>
+        <p class="page-header-eyebrow">Terminals &amp; ATMs</p>
         <h1 class="page-header-headline">
           InCynq inworld.<br>
           <em>No browser needed.</em>
@@ -49,6 +49,109 @@
         </p>
       </div>
     </section>
+
+
+    <!-- DEVICE LOCATIONS — dynamic from Supabase -->
+    <section class="section section-teal-light" id="terminal-locations">
+      <div class="container">
+        <p class="section-eyebrow eyebrow-teal">Device locations</p>
+        <h2 class="section-headline">Find InCynq inworld.</h2>
+        <p class="section-sub">
+          Tap any SLURL below to teleport directly to a device location in Second Life.
+        </p>
+
+        <div id="hq-locations" class="locations-grid">
+          <div class="location-card location-coming-soon" style="grid-column:1/-1;text-align:center;padding:32px;">
+            <div style="color:#9fb6c2;font-size:14px;">Loading locations…</div>
+          </div>
+        </div>
+
+        <div id="partner-locations-wrap" style="display:none;margin-top:48px;">
+          <p class="section-eyebrow eyebrow-teal" style="margin-bottom:8px;">Partner locations</p>
+          <p class="section-sub" style="margin-bottom:24px;">InCynq Terminals and ATMs hosted by sim owners across the grid.</p>
+          <div id="partner-locations" class="locations-grid"></div>
+        </div>
+
+        <p class="tiers-note" style="margin-top:32px;">Are you a sim owner? Host an InCynq Terminal and earn a share of every transaction made at your location. Get in touch at <a href="mailto:support@incynq.net?subject=Host%20InCynq%20Terminal%20and%20ATM">support@incynq.net</a>.</p>
+      </div>
+    </section>
+
+    <script>
+    (async function() {
+      const SUPABASE_URL = 'https://muzzjvegynsemlsbwggf.supabase.co';
+      const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI';
+
+      function typeLabel(types) {
+        if (types.has('terminal') && types.has('atm')) return '&#128225; Terminal + &#127975; ATM';
+        if (types.has('terminal')) return '&#128225; Terminal';
+        return '&#127975; ATM';
+      }
+
+      function makeCard(loc, isHQ) {
+        const name = isHQ ? 'InCynq HQ &mdash; ' + loc.region : loc.region;
+        const hasSlurl = !!loc.slurl;
+        return '<div class="location-card">'
+          + '<div class="location-type">' + typeLabel(loc.types) + '</div>'
+          + '<div class="location-name">' + name + '</div>'
+          + '<div class="location-region">' + loc.region + '</div>'
+          + (hasSlurl
+            ? '<a href="' + loc.slurl + '" class="device-slurl">Teleport inworld &rarr;</a>'
+            : '<span class="device-slurl" style="opacity:0.5;pointer-events:none;">Opening soon</span>')
+          + '</div>';
+      }
+
+      const comingSoonCard = '<div class="location-card location-coming-soon">'
+        + '<div class="location-type">&#128225; Terminal + &#127975; ATM</div>'
+        + '<div class="location-name">More locations coming soon</div>'
+        + '<div class="location-region">Apply to host at your venue</div>'
+        + '<a href="mailto:support@incynq.net?subject=Host%20InCynq%20Terminal%20and%20ATM" class="device-slurl">Get in touch &rarr;</a>'
+        + '</div>';
+
+      const openingSoonCard = '<div class="location-card location-coming-soon">'
+        + '<div class="location-type">&#127962; InCynq HQ</div>'
+        + '<div class="location-name">InCynq Main Store</div>'
+        + '<div class="location-region">Opening shortly &mdash; Terminals &amp; ATMs on-site</div>'
+        + '<span class="device-slurl" style="opacity:0.5;pointer-events:none;">Opening soon</span>'
+        + '</div>';
+
+      try {
+        const res = await fetch(
+          SUPABASE_URL + '/rest/v1/inworld_devices?active=eq.true&select=device_type,region,slurl,owner_avatar_name,friendly_id&order=friendly_id.asc',
+          { headers: { apikey: ANON_KEY, Authorization: 'Bearer ' + ANON_KEY } }
+        );
+        const devices = await res.json();
+
+        const hqDevices      = devices.filter(d => (d.owner_avatar_name || '').toLowerCase().includes('incynqpayments'));
+        const partnerDevices = devices.filter(d => !(d.owner_avatar_name || '').toLowerCase().includes('incynqpayments'));
+
+        function groupByRegion(list) {
+          const map = {};
+          list.forEach(d => {
+            const k = d.region || 'Unknown';
+            if (!map[k]) map[k] = { region: k, slurl: d.slurl, types: new Set() };
+            map[k].types.add(d.device_type);
+          });
+          return Object.values(map);
+        }
+
+        const hqEl = document.getElementById('hq-locations');
+        const hqRegions = groupByRegion(hqDevices);
+        hqEl.innerHTML = hqRegions.length > 0
+          ? hqRegions.map(r => makeCard(r, true)).join('') + comingSoonCard
+          : openingSoonCard + comingSoonCard;
+
+        const partnerRegions = groupByRegion(partnerDevices);
+        if (partnerRegions.length > 0) {
+          document.getElementById('partner-locations').innerHTML = partnerRegions.map(r => makeCard(r, false)).join('');
+          document.getElementById('partner-locations-wrap').style.display = 'block';
+        }
+
+      } catch(e) {
+        console.error('Failed to load locations:', e);
+        document.getElementById('hq-locations').innerHTML = openingSoonCard + comingSoonCard;
+      }
+    })();
+    </script>
 
 
     <!-- DEVICE OVERVIEW -->
@@ -131,7 +234,7 @@
               <div class="device-visual-divider"></div>
               <div class="device-visual-row">
                 <span>Location</span>
-                <span>ACM Community Market</span>
+                <span>InCynq HQ</span>
               </div>
               <div class="device-visual-row">
                 <span>Activation fee</span>
@@ -161,7 +264,7 @@
               <div class="device-visual-divider"></div>
               <div class="device-visual-row">
                 <span>Location</span>
-                <span>ACM Community Market</span>
+                <span>InCynq HQ</span>
               </div>
               <div class="device-visual-row">
                 <span>Minimum top-up</span>
@@ -215,33 +318,7 @@
     </section>
 
 
-    <!-- DEVICE LOCATIONS -->
-    <section class="section section-teal-light" id="terminal-locations">
-      <div class="container">
-        <p class="section-eyebrow eyebrow-teal">Device locations</p>
-        <h2 class="section-headline">Find InCynq inworld.</h2>
-        <p class="section-sub">
-          Tap any SLURL below to teleport directly to a device location in Second Life.
-        </p>
 
-        <div class="locations-grid">
-          <div class="location-card">
-            <div class="location-type">📡 Terminal + 🏧 ATM</div>
-            <div class="location-name">ACM Community Market</div>
-            <div class="location-region">ACM Community Market, Awakening Serendipity</div>
-            <a href="secondlife://Awakening%20Serendipity/128/128/22" class="device-slurl">Teleport inworld →</a>
-          </div>
-          <div class="location-card location-coming-soon">
-            <div class="location-type">📡 Terminal + 🏧 ATM</div>
-            <div class="location-name">More locations coming soon</div>
-            <div class="location-region">Apply to host a Terminal at your venue</div>
-            <a href="mailto:hello@incynq.net" class="device-slurl">Get in touch →</a>
-          </div>
-        </div>
-
-        <p class="tiers-note">Are you a sim owner? Host an InCynq Terminal and earn a share of every transaction made at your location. Get in touch at hello@incynq.net.</p>
-      </div>
-    </section>
 
 
     <!-- CTA -->
@@ -274,7 +351,7 @@
           <p class="footer-col-title">Platform</p>
           <a href="residents.html">For residents</a>
           <a href="brands.html">For brands</a>
-          <a href="devices.html">Inworld devices</a>
+          <a href="devices.html">Terminals &amp; ATMs</a>
           <a href="contact.html">Contact us</a>
         </div>
         <div class="footer-col">
