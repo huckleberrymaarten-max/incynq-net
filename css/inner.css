@@ -503,7 +503,7 @@ details[open] .faq-chevron { transform: rotate(180deg); }
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 800;
-  color: var(--text);
+  color: var(--teal);
   margin: 40px 0 12px;
 }
 .legal-body h2:first-child { margin-top: 0; }
@@ -626,7 +626,7 @@ details[open] .faq-chevron { transform: rotate(180deg); }
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 800;
-  color: var(--text);
+  color: var(--teal);
   margin-bottom: 12px;
 }
 
