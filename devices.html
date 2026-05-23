@@ -88,7 +88,7 @@
       }
 
       function makeCard(loc, isHQ) {
-        const name = isHQ ? 'InCynq HQ &mdash; ' + loc.region : loc.region;
+        const name = isHQ ? 'InCynq Main Store &mdash; ' + loc.region : loc.region;
         const hasSlurl = !!loc.slurl;
         return '<div class="location-card">'
           + '<div class="location-type">' + typeLabel(loc.types) + '</div>'
