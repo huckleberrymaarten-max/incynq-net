@@ -1072,15 +1072,119 @@ body {
   line-height: 1.6;
 }
 
-/* ── Reviews link (homepage rating section) ── */
-.reviews-link {
-  display: inline-block;
-  margin-top: 14px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--teal);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.15s;
+/* ── Ad type explainer ── */
+.ad-types-explainer {
+  display: flex;
+  gap: 16px;
+  margin: 28px 0 36px;
+  flex-wrap: wrap;
 }
-.reviews-link:hover { color: var(--teal-mid); }
+.ad-type-item {
+  flex: 1;
+  min-width: 200px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.ad-type-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+}
+.ad-type-label-teal { color: var(--teal); }
+.ad-type-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* ── Tier badge + note ── */
+.tier-badge {
+  display: inline-block;
+  background: var(--teal);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 10px;
+  letter-spacing: 0.3px;
+}
+.tier-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* ── Full-width section-sub override ── */
+.section-sub-wide {
+  max-width: 100%;
+}
+
+/* ── Launch promo banner ── */
+.promo-banner {
+  background: linear-gradient(135deg, var(--teal), #005265);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  margin-bottom: 32px;
+}
+.promo-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.promo-badge {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.promo-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-width: 200px;
+}
+.promo-text strong {
+  font-size: 1.1rem;
+}
+.promo-cta {
+  background: #fff;
+  color: var(--teal) !important;
+  font-weight: 800;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  transition: opacity 0.15s;
+}
+.promo-cta:hover { opacity: 0.9; }
+
+@media (max-width: 600px) {
+  .promo-banner-inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* ── Promo counter ── */
+.promo-counter {
+  opacity: 0.85;
+  font-size: 0.9rem;
+}
+
+/* ── Price strikethrough ── */
+.price-strike {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  margin-right: 2px;
+}

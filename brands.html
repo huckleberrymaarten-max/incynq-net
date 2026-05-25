@@ -24,7 +24,6 @@
         <a href="brands.html" class="nav-active">Brands</a>
         <a href="devices.html">Terminals &amp; ATMs</a>
         <a href="faq.html">FAQ</a>
-        <a href="reviews.html">Reviews</a>
         <a href="install.html" class="nav-link-subtle">Install app</a>
       </nav>
       <div class="nav-actions">
@@ -178,90 +177,141 @@
       <div class="container">
         <p class="section-eyebrow">Advertising</p>
         <h2 class="section-headline">Ads that scale<br>with the platform.</h2>
-        <p class="section-sub">
-          Ad pricing is tiered by platform size — as InCynq grows, so does your reach. Three ad types, four tiers. No hidden fees, no auction bidding.
+        <p class="section-sub section-sub-wide">
+          Ad pricing is based on how many members InCynq has in total — not your own follower count. The more the platform grows, the bigger the audience your ad can reach, and the price reflects that. Right now InCynq is in its early days, so everyone runs on Launch tier — the lowest rates available. No hidden fees, no auction bidding.
         </p>
 
+        <!-- Ad type explanation -->
+        <div class="ad-types-explainer">
+          <div class="ad-type-item">
+            <span class="ad-type-label">Basic</span>
+            <span class="ad-type-desc">Your ad is shown to members whose chosen interests match your brand. Targeted, relevant, efficient.</span>
+          </div>
+          <div class="ad-type-item">
+            <div class="ad-type-label">Featured</div>
+            <span class="ad-type-desc">Broader reach — shown across a wider range of matching interest groups. More visibility, more discovery.</span>
+          </div>
+          <div class="ad-type-item">
+            <span class="ad-type-label ad-type-label-teal">Premium</span>
+            <span class="ad-type-desc">Maximum reach — your ad reaches all relevant members on the platform. Best for big launches and events.</span>
+          </div>
+        </div>
+
+        <!-- LAUNCH PROMO BANNER — auto-hides at 1,000 members -->
+        <div class="promo-banner" id="launch-promo" style="display:none;">
+          <div class="promo-banner-inner">
+            <div class="promo-badge">🎉 Launch Offer</div>
+            <div class="promo-text">
+              <strong>50% off all ad rates</strong> — until InCynq reaches 1,000 members. Lock in the lowest prices before they go up.
+              <span class="promo-counter" id="promo-counter"></span>
+            </div>
+            <a href="https://incynq.app" class="btn btn-white promo-cta" target="_blank" rel="noopener">Claim now →</a>
+          </div>
+        </div>
+
+        <script>
+        (async () => {
+          const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI';
+          try {
+            const res  = await fetch(
+              'https://muzzjvegynsemlsbwggf.supabase.co/rest/v1/profiles?select=id&activated=eq.true&username=not.in.(incynqpayments,incynqofficial)',
+              { headers: { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON, 'Prefer': 'count=exact', 'Range': '0-0' } }
+            );
+            const count = parseInt(res.headers.get('Content-Range')?.split('/')[1] || '0');
+            if (count < 1000) {
+              document.getElementById('launch-promo').style.display = 'block';
+              const remaining = 1000 - count;
+              document.getElementById('promo-counter').textContent = ' — ' + remaining + ' spot' + (remaining === 1 ? '' : 's') + ' left at this price.';
+            }
+          } catch(e) {
+            // On error show the banner anyway — safe default
+            document.getElementById('launch-promo').style.display = 'block';
+          }
+        })();
+        </script>
+
         <div class="tiers-grid">
-          <div class="tier-card">
+          <div class="tier-card tier-featured">
+            <div class="tier-badge">You are here now</div>
             <div class="tier-emoji">⚡</div>
             <div class="tier-name">Launch</div>
-            <div class="tier-members">Under 500 members</div>
+            <div class="tier-members">Under 500 members on InCynq</div>
             <div class="tier-reaches">
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Basic</span>
-                <span class="tier-reach-val">Standard reach</span>
+                <span class="tier-reach-val">from <s class="price-strike">250</s> <strong>125 L$/wk</strong></span>
               </div>
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Featured</span>
-                <span class="tier-reach-val">Extended reach</span>
+                <span class="tier-reach-val">from <s class="price-strike">750</s> <strong>375 L$/wk</strong></span>
               </div>
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Premium</span>
-                <span class="tier-reach-val val-teal">Maximum reach</span>
+                <span class="tier-reach-val val-teal">from <s class="price-strike">1,500</s> <strong>750 L$/wk</strong></span>
               </div>
             </div>
+            <p class="tier-note">50% launch discount applied. Prices increase with more interest groups targeted.</p>
           </div>
-          <div class="tier-card tier-featured">
+          <div class="tier-card">
             <div class="tier-emoji">🚀</div>
             <div class="tier-name">Growth</div>
-            <div class="tier-members">500 – 2,000 members</div>
+            <div class="tier-members">500 – 2,000 members on InCynq</div>
             <div class="tier-reaches">
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Basic</span>
-                <span class="tier-reach-val">~200 / day</span>
+                <span class="tier-reach-val">from 500 L$/wk</span>
               </div>
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Featured</span>
-                <span class="tier-reach-val">~600 / day</span>
+                <span class="tier-reach-val">from 1,500 L$/wk</span>
               </div>
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Premium</span>
-                <span class="tier-reach-val val-teal">~1,200 / day</span>
+                <span class="tier-reach-val val-teal">from 3,000 L$/wk</span>
               </div>
             </div>
           </div>
           <div class="tier-card">
             <div class="tier-emoji">🏆</div>
             <div class="tier-name">Established</div>
-            <div class="tier-members">2,000 – 10,000 members</div>
+            <div class="tier-members">2,000 – 10,000 members on InCynq</div>
             <div class="tier-reaches">
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Basic</span>
-                <span class="tier-reach-val">~800 / day</span>
+                <span class="tier-reach-val">from 1,000 L$/wk</span>
               </div>
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Featured</span>
-                <span class="tier-reach-val">~2,400 / day</span>
+                <span class="tier-reach-val">from 3,000 L$/wk</span>
               </div>
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Premium</span>
-                <span class="tier-reach-val val-teal">~5,000 / day</span>
+                <span class="tier-reach-val val-teal">from 6,000 L$/wk</span>
               </div>
             </div>
           </div>
           <div class="tier-card">
             <div class="tier-emoji">👑</div>
             <div class="tier-name">Premium</div>
-            <div class="tier-members">10,000+ members</div>
+            <div class="tier-members">10,000+ members on InCynq</div>
             <div class="tier-reaches">
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Basic</span>
-                <span class="tier-reach-val">~2,000 / day</span>
+                <span class="tier-reach-val">from 2,500 L$/wk</span>
               </div>
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Featured</span>
-                <span class="tier-reach-val">~6,000 / day</span>
+                <span class="tier-reach-val">from 7,500 L$/wk</span>
               </div>
               <div class="tier-reach-row">
                 <span class="tier-reach-name">Premium</span>
-                <span class="tier-reach-val val-teal">~15,000 / day</span>
+                <span class="tier-reach-val val-teal">from 15,000 L$/wk</span>
               </div>
             </div>
           </div>
         </div>
 
-        <p class="tiers-note">Ad pricing is displayed in-app at the time of booking. Ads run for 1–4 weeks with discounts for longer durations. Pricing updates automatically as the platform grows.</p>
+        <p class="tiers-note">All prices are per week, starting from 1 interest group targeted. Pricing increases with more groups and scales automatically as the platform grows. Exact costs shown in-app at booking. Discounts available for 2–4 week runs.</p>
       </div>
     </section>
 
@@ -327,7 +377,6 @@
           <a href="residents.html">For residents</a>
           <a href="brands.html">For brands</a>
           <a href="devices.html">Terminals &amp; ATMs</a>
-          <a href="reviews.html">Reviews</a>
           <a href="contact.html">Contact us</a>
         </div>
         <div class="footer-col">
