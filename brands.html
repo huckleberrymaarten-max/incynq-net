@@ -136,7 +136,7 @@
                 </ul>
               </div>
               <div class="dashboard-tier dashboard-tier-paid">
-                <p class="dashboard-tier-title">Dashboard Upgrade — 500 L$/month</p>
+                <p class="dashboard-tier-title">Dashboard Upgrade — <span id="dash-price-monthly">250</span> L$/month · or <span id="dash-price-annual">2,500</span> L$/year (2 months free)</p>
                 <ul class="dashboard-tier-list">
                   <li>Demographic breakdown</li>
                   <li>Audience trends</li>
@@ -460,5 +460,29 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+  (async () => {
+    const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI';
+    const HDRS = { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON };
+    try {
+      const res  = await fetch(
+        'https://muzzjvegynsemlsbwggf.supabase.co/rest/v1/app_content?key=in.(dashboard_upgrade_monthly,dashboard_upgrade_annual)&select=key,value',
+        { headers: HDRS }
+      );
+      const data = await res.json();
+      if (!Array.isArray(data)) return;
+      data.forEach(row => {
+        if (row.key === 'dashboard_upgrade_monthly') {
+          const el = document.getElementById('dash-price-monthly');
+          if (el) el.textContent = parseInt(row.value).toLocaleString();
+        }
+        if (row.key === 'dashboard_upgrade_annual') {
+          const el = document.getElementById('dash-price-annual');
+          if (el) el.textContent = parseInt(row.value).toLocaleString();
+        }
+      });
+    } catch(e) {}
+  })();
+  </script>
 </body>
 </html>
