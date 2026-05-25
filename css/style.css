@@ -1071,3 +1071,16 @@ body {
   margin-right: auto;
   line-height: 1.6;
 }
+
+/* ── Reviews link (homepage rating section) ── */
+.reviews-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+.reviews-link:hover { color: var(--teal-mid); }

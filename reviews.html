@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Reviews — InCynq</title>
+  <meta name="description" content="Real reviews from real Second Life residents. See what InCynq members think of the app.">
+
+  <meta property="og:title" content="Member Reviews — InCynq">
+  <meta property="og:description" content="Real reviews from real Second Life residents.">
+  <meta property="og:url" content="https://incynq.net/reviews.html">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/inner.css">
+
+  <style>
+    /* ── Reviews page styles ── */
+    .reviews-hero {
+      background: var(--teal);
+      padding: 64px 0 48px;
+      text-align: center;
+      color: #fff;
+    }
+    .reviews-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .reviews-hero p {
+      font-size: 1.1rem;
+      opacity: 0.85;
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+    .reviews-summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius-pill);
+      padding: 10px 24px;
+    }
+    .reviews-summary-avg {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+    }
+    .reviews-summary-stars {
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+    }
+    .reviews-summary-stars .s-full { color: #ffd166; }
+    .reviews-summary-stars .s-half { color: #ffd166; opacity: 0.6; }
+    .reviews-summary-stars .s-empty { opacity: 0.3; }
+    .reviews-summary-count {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* ── Grid ── */
+    .reviews-body {
+      padding: 64px 0 80px;
+    }
+    .reviews-empty {
+      text-align: center;
+      padding: 80px 0;
+      color: var(--text-muted);
+    }
+    .reviews-empty p { font-size: 1.1rem; margin-bottom: 24px; }
+    .reviews-empty-title { font-weight: 700; font-size: 1.3rem !important; margin-bottom: 10px !important; }
+    .reviews-empty-how { font-size: 0.95rem !important; color: var(--text-muted); max-width: 420px; margin: 0 auto 28px !important; line-height: 1.6; }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .review-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .review-card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .review-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--teal-light-bg);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .review-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .review-meta { flex: 1; min-width: 0; }
+    .review-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .review-handle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .review-stars {
+      font-size: 1rem;
+      letter-spacing: 1px;
+      color: var(--amber);
+      flex-shrink: 0;
+    }
+    .review-stars .s-empty { opacity: 0.25; }
+    .review-body {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .review-reply {
+      background: var(--teal-light-bg);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+    }
+    .review-reply-label {
+      font-weight: 700;
+      color: var(--teal);
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .review-date {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-top: auto;
+    }
+
+    /* ── CTA ── */
+    .reviews-cta {
+      text-align: center;
+      padding: 48px 0 0;
+      border-top: 1px solid var(--border);
+    }
+    .reviews-cta p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+
+    /* ── Loading skeleton ── */
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .skeleton-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .skeleton-line {
+      background: var(--border);
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav-header" id="navHeader">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo" aria-label="InCynq home">
+        <img src="assets/q-logo.png" alt="" class="logo-img" aria-hidden="true">
+        <span class="logo-text">InCynq</span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="residents.html">Residents</a>
+        <a href="brands.html">Brands</a>
+        <a href="devices.html">Terminals &amp; ATMs</a>
+        <a href="faq.html">FAQ</a>
+        <a href="reviews.html" class="nav-active">Reviews</a>
+        <a href="install.html" class="nav-link-subtle">Install app</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="https://incynq.app" class="btn btn-primary nav-cta" target="_blank" rel="noopener">Join free</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="reviews-hero">
+    <div class="container">
+      <h1>What members say</h1>
+      <p>Real reviews from real Second Life residents — left from inside the InCynq app.</p>
+      <div id="reviews-summary" style="display:none;">
+        <div class="reviews-summary">
+          <span class="reviews-summary-avg" id="summary-avg"></span>
+          <span class="reviews-summary-stars" id="summary-stars"></span>
+          <span class="reviews-summary-count" id="summary-count"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS BODY -->
+  <main>
+    <section class="reviews-body">
+      <div class="container">
+
+        <!-- Loading state -->
+        <div id="reviews-loading" class="skeleton-grid">
+          <div class="skeleton-card">
+            <div class="skeleton-line" style="height:18px;width:60%"></div>
+            <div class="skeleton-line" style="height:14px;width:40%"></div>
+            <div class="skeleton-line" style="height:60px;width:100%"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skeleton-line" style="height:18px;width:55%"></div>
+            <div class="skeleton-line" style="height:14px;width:35%"></div>
+            <div class="skeleton-line" style="height:80px;width:100%"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skeleton-line" style="height:18px;width:65%"></div>
+            <div class="skeleton-line" style="height:14px;width:45%"></div>
+            <div class="skeleton-line" style="height:70px;width:100%"></div>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div id="reviews-empty" class="reviews-empty" style="display:none;">
+          <p class="reviews-empty-title">No reviews yet — be the first!</p>
+          <p class="reviews-empty-how">Open the InCynq app, tap the <strong>⭐</strong> button at the top of your feed, and leave your review. Takes 30 seconds.</p>
+          <a href="https://incynq.app" class="btn btn-primary btn-lg" target="_blank" rel="noopener">Open the app →</a>
+        </div>
+
+        <!-- Review cards -->
+        <div id="reviews-grid" class="review-grid" style="display:none;"></div>
+
+        <!-- CTA -->
+        <div class="reviews-cta" id="reviews-cta" style="display:none;">
+          <p>Loving InCynq? Leave your review from inside the app.</p>
+          <a href="https://incynq.app" class="btn btn-primary btn-lg" target="_blank" rel="noopener">Open the app →</a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo" aria-label="InCynq home">
+          <img src="assets/q-logo.png" alt="" class="logo-img" aria-hidden="true">
+          <span class="logo-text">InCynq</span>
+        </a>
+        <p class="footer-tagline">Connect with what matters.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <div class="footer-col">
+          <p class="footer-col-title">Platform</p>
+          <a href="residents.html">For residents</a>
+          <a href="brands.html">For brands</a>
+          <a href="devices.html">Terminals &amp; ATMs</a>
+          <a href="reviews.html" class="nav-active">Reviews</a>
+          <a href="contact.html">Contact us</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Legal</p>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="cookies.html">Cookie Policy</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Get started</p>
+          <a href="https://incynq.app" target="_blank" rel="noopener">Open the app</a>
+          <a href="https://incynq.app" target="_blank" rel="noopener">Create account</a>
+          <a href="brands.html">Activate a brand</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 InCynq. Second Life is a trademark of Linden Research, Inc. InCynq is not affiliated with or endorsed by Linden Research.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <script>
+  (async () => {
+    const SUPABASE_URL  = 'https://muzzjvegynsemlsbwggf.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI';
+    const HEADERS = { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON };
+
+    try {
+      const res = await fetch(
+        SUPABASE_URL + '/rest/v1/reviews?select=rating,body,admin_reply,created_at,profiles(username,display_name,avatar_url)&order=created_at.desc',
+        { headers: HEADERS }
+      );
+      const data = await res.json();
+
+      document.getElementById('reviews-loading').style.display = 'none';
+
+      if (!data || data.length === 0) {
+        document.getElementById('reviews-empty').style.display = 'block';
+        return;
+      }
+
+      // Summary
+      const avg   = data.reduce((s, r) => s + r.rating, 0) / data.length;
+      const count = data.length;
+      const full  = Math.floor(avg);
+      const half  = (avg - full) >= 0.25 && (avg - full) < 0.75;
+      const empty = 5 - full - (half ? 1 : 0);
+
+      document.getElementById('summary-avg').textContent = avg.toFixed(1);
+      document.getElementById('summary-stars').innerHTML =
+        '<span class="s-full">' + '★'.repeat(full) + '</span>' +
+        (half ? '<span class="s-half">★</span>' : '') +
+        '<span class="s-empty">' + '★'.repeat(empty) + '</span>';
+      document.getElementById('summary-count').textContent =
+        count + ' ' + (count === 1 ? 'review' : 'reviews');
+      document.getElementById('reviews-summary').style.display = 'block';
+
+      // Cards
+      const grid = document.getElementById('reviews-grid');
+      data.forEach(r => {
+        const name   = r.profiles?.display_name || r.profiles?.username || 'InCynq member';
+        const handle = r.profiles?.username ? '@' + r.profiles.username : '';
+        const avatar = r.profiles?.avatar_url || '';
+        const date   = new Date(r.created_at).toLocaleDateString('en-IE', { month: 'short', year: 'numeric' });
+        const sf     = Math.floor(r.rating);
+        const se     = 5 - sf;
+
+        const card = document.createElement('div');
+        card.className = 'review-card';
+        card.innerHTML =
+          '<div class="review-card-top">' +
+            '<div class="review-avatar">' +
+              (avatar
+                ? '<img src="' + avatar + '" alt="' + name + '" loading="lazy">'
+                : '<span>👤</span>') +
+            '</div>' +
+            '<div class="review-meta">' +
+              '<p class="review-name">' + name + '</p>' +
+              (handle ? '<p class="review-handle">' + handle + '</p>' : '') +
+            '</div>' +
+            '<div class="review-stars">' +
+              '★'.repeat(sf) + '<span class="s-empty">' + '★'.repeat(se) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<p class="review-body">"' + r.body + '"</p>' +
+          (r.admin_reply
+            ? '<div class="review-reply"><span class="review-reply-label">InCynq replied</span>' + r.admin_reply + '</div>'
+            : '') +
+          '<p class="review-date">' + date + '</p>';
+
+        grid.appendChild(card);
+      });
+
+      document.getElementById('reviews-grid').style.display = 'grid';
+      document.getElementById('reviews-cta').style.display  = 'block';
+
+    } catch(e) {
+      document.getElementById('reviews-loading').style.display = 'none';
+      document.getElementById('reviews-empty').style.display   = 'block';
+    }
+  })();
+  </script>
+
+</body>
+</html>

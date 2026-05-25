@@ -37,6 +37,7 @@
         <a href="brands.html">Brands</a>
         <a href="devices.html">Terminals &amp; ATMs</a>
         <a href="faq.html">FAQ</a>
+        <a href="reviews.html">Reviews</a>
         <a href="install.html" class="nav-link-subtle">Install app</a>
       </nav>
 
@@ -155,30 +156,38 @@
         <div id="rating-live" class="rating-live" style="display:none;">
           <div class="rating-stars" id="rating-stars"></div>
           <p class="rating-score" id="rating-score"></p>
+          <a href="reviews.html" class="reviews-link" id="reviews-link" style="display:none;"></a>
         </div>
       </div>
     </section>
 
     <script>
     (async () => {
+      const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI';
+      const HDRS = { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON };
+      const link = document.getElementById('reviews-link');
+
       try {
-        const res = await fetch(
-          'https://muzzjvegynsemlsbwggf.supabase.co/rest/v1/surveys?select=q6_stars&q6_stars=not.is.null',
-          {
-            headers: {
-              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI',
-              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI'
-            }
-          }
+        const res  = await fetch(
+          'https://muzzjvegynsemlsbwggf.supabase.co/rest/v1/reviews?select=rating&rating=not.is.null',
+          { headers: HDRS }
         );
         const data = await res.json();
-        if (!data || data.length === 0) return;
+        const count = data && data.length ? data.length : 0;
 
-        const avg = data.reduce((sum, r) => sum + r.q6_stars, 0) / data.length;
-        const count = data.length;
+        // Always show the link
+        link.style.display = 'inline-block';
 
-        const full = Math.floor(avg);
-        const half = avg - full >= 0.25 && avg - full < 0.75 ? 1 : 0;
+        if (count === 0) {
+          // No reviews yet — show teaser, no rating block
+          link.textContent = 'Be the first to leave a review →';
+          return;
+        }
+
+        // Reviews exist — show rating block
+        const avg   = data.reduce((sum, r) => sum + r.rating, 0) / count;
+        const full  = Math.floor(avg);
+        const half  = avg - full >= 0.25 && avg - full < 0.75 ? 1 : 0;
         const empty = 5 - full - half;
         const stars = '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
 
@@ -187,8 +196,15 @@
           'Rated <strong>' + avg.toFixed(1) + ' / 5</strong> by ' + count + ' InCynq ' + (count === 1 ? 'member' : 'members');
 
         document.getElementById('rating-placeholder').style.display = 'none';
-        document.getElementById('rating-live').style.display = 'block';
-      } catch(e) {}
+        document.getElementById('rating-live').style.display        = 'block';
+
+        link.textContent = 'See what members say →';
+
+      } catch(e) {
+        // On error just show the teaser link
+        link.style.display = 'inline-block';
+        link.textContent   = 'Be the first to leave a review →';
+      }
     })();
     </script>
 
@@ -453,6 +469,7 @@
           <a href="residents.html">For residents</a>
           <a href="brands.html">For brands</a>
           <a href="devices.html">Terminals &amp; ATMs</a>
+          <a href="reviews.html">Reviews</a>
           <a href="contact.html">Contact us</a>
         </div>
         <div class="footer-col">
