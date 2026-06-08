@@ -130,7 +130,7 @@ export const QA_DATA = [
         title: "Setting Up Your Brand Account",
         items: [
           { q: "What do I need before creating a brand account?", a: "A member account on InCynq. Brand accounts are always linked to a personal member account. You manage both from one login." },
-          { q: "How do I create a brand account?", a: "Settings → Add Brand Account. Fill in your brand name, description, logo, and brand email. Pay the 3,500 L$ activation fee using an InCynq ATM inworld. That 3,500 L$ goes directly into your Brand Wallet as ad credit — nothing is wasted." },
+          { q: "How do I create a brand account?", a: "Settings → Add Brand Account. Fill in your brand name, description, logo, and brand email. Pay the 2,500 L$ activation fee using an InCynq ATM inworld. That 2,500 L$ goes directly into your Brand Wallet as ad credit — nothing is wasted." },
           { q: "Can I have more than one brand account?", a: "Not in the current version. One member account, one brand account, linked together." },
           { q: "How do I switch between my personal and brand account?", a: "Tap your avatar in the top navigation to open the account switcher. Tap any account to switch instantly — no logout needed." },
           { q: "What is the Brand Team feature?", a: "You can invite one Manager to help run your brand account. A manager can post, create events, boost, manage ads, top up the wallet, and reply to comments. They cannot delete the brand, invite others, or transfer ownership." },
@@ -155,7 +155,7 @@ export const QA_DATA = [
       {
         title: "Brand Wallet",
         items: [
-          { q: "What is the Brand Wallet?", a: "A L$ balance held on InCynq, used for running ads, boosting events, and optional paid features like the Dashboard Upgrade. It is created automatically when you activate your brand account. The 3,500 L$ activation fee becomes your opening balance." },
+          { q: "What is the Brand Wallet?", a: "A L$ balance held on InCynq, used for running ads, boosting events, and optional paid features like the Dashboard Upgrade. It is created automatically when you activate your brand account. The 2,500 L$ activation fee becomes your opening balance." },
           { q: "How do I top up my Brand Wallet?", a: "In the Advertise tab, tap Top Up. Choose an amount, receive a unique payment code, find an InCynq ATM inworld and follow the instructions. Your wallet updates automatically." },
           { q: "Are wallet balances refundable?", a: "No. All wallet L$ is non-refundable. This applies to activation fees, ad spend, event boosts, Cynqified application fees, and Dashboard Upgrade subscriptions. Only top up what you plan to spend." },
           { q: "What happens to my wallet if my account is suspended?", a: "Your Brand Wallet is frozen. No ads can run, the Dashboard Upgrade pauses, and no new payments can be made until the suspension is lifted. If the account is permanently banned, the wallet balance is forfeited." },
