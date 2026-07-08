@@ -19,24 +19,20 @@
 
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .section-dark-navy { background: #071318; }
-    .section-dark-navy .section-eyebrow { color: #00B4C8; }
-    .section-dark-navy .section-headline { color: #fff; }
-    .section-dark-navy .section-sub { color: #7a9aaa; }
     .vs-table { margin: 36px 0 40px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(0,180,200,0.2); }
-    .vs-table-header { display: grid; grid-template-columns: 1fr 1.5fr 1.5fr; background: #040d12; }
+    .vs-table-header { display: grid; grid-template-columns: 1fr 1.5fr 1.5fr; background: #d0eef2; }
     .vs-th-empty { padding: 13px 18px; }
     .vs-th { padding: 13px 18px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; text-align: center; }
-    .vs-th-them { color: #ff6680; background: rgba(255,70,102,0.08); }
-    .vs-th-us { color: #00B4C8; background: rgba(0,180,200,0.08); }
-    .vs-section-divider { background: rgba(0,180,200,0.06); border-top: 1px solid rgba(0,180,200,0.15); border-bottom: 1px solid rgba(0,180,200,0.15); padding: 7px 18px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #00B4C8; }
-    .vs-row { display: grid; grid-template-columns: 1fr 1.5fr 1.5fr; border-top: 1px solid rgba(255,255,255,0.04); }
-    .vs-row:hover { background: rgba(255,255,255,0.02); }
-    .vs-label { padding: 14px 18px; font-size: 12px; font-weight: 700; color: #fff; display: flex; align-items: center; }
-    .vs-bad { padding: 14px 18px; font-size: 12px; color: #99aab5; background: rgba(255,70,102,0.03); line-height: 1.55; }
-    .vs-bad::before { content: '\2717  '; color: #ff6680; font-weight: 700; }
-    .vs-good { padding: 14px 18px; font-size: 12px; color: #cef0f5; background: rgba(0,180,200,0.04); line-height: 1.55; }
-    .vs-good::before { content: '\2713  '; color: #00B4C8; font-weight: 700; }
+    .vs-th-them { color: #c0002a; background: rgba(255,70,102,0.12); }
+    .vs-th-us { color: #007a8a; background: rgba(0,180,200,0.12); }
+    .vs-section-divider { background: rgba(0,180,200,0.1); border-top: 1px solid rgba(0,180,200,0.2); border-bottom: 1px solid rgba(0,180,200,0.2); padding: 7px 18px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #007a8a; }
+    .vs-row { display: grid; grid-template-columns: 1fr 1.5fr 1.5fr; border-top: 1px solid rgba(0,0,0,0.06); }
+    .vs-row:hover { background: rgba(0,0,0,0.02); }
+    .vs-label { padding: 14px 18px; font-size: 12px; font-weight: 700; color: #0A1A24; display: flex; align-items: center; }
+    .vs-bad { padding: 14px 18px; font-size: 12px; color: #556; background: rgba(255,70,102,0.04); line-height: 1.55; }
+    .vs-bad::before { content: '\2717  '; color: #e0002a; font-weight: 700; }
+    .vs-good { padding: 14px 18px; font-size: 12px; color: #0A2A30; background: rgba(0,180,200,0.06); line-height: 1.55; }
+    .vs-good::before { content: '\2713  '; color: #007a8a; font-weight: 700; }
     .vs-how-it-works { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     @media (max-width: 700px) {
       .vs-table-header { grid-template-columns: 1fr 1fr; }
@@ -270,7 +266,7 @@
     <!-- =========================================================
          WHY INCYNQ — VS Groups & Notices
     ========================================================= -->
-    <section class="section section-dark-navy" id="why-incynq-vs">
+    <section class="section section-teal-light" id="why-incynq-vs">
       <div class="container">
         <p class="section-eyebrow eyebrow-teal">Why InCynq?</p>
         <h2 class="section-headline">SL groups and notices<br><span class="text-teal">weren't built for this.</span></h2>
@@ -321,41 +317,6 @@
       </div>
     </section>
 
-
-    <!-- =========================================================
-         SOLUTION — "Follow interests, not groups"
-    ========================================================= -->
-    <section class="section section-teal-light" id="solution">
-      <div class="container">
-        <p class="section-eyebrow eyebrow-teal">InCynq fixes that.</p>
-        <h2 class="section-headline">Follow your interests.<br><span class="text-teal">Not groups.</span></h2>
-        <p class="section-sub">
-          Choose what you care about. Follow the brands and creators you love. Your feed shows exactly that — nothing else. No algorithm deciding for you. No spam. No noise. Just what you chose.
-        </p>
-
-        <div class="solution-grid">
-
-          <div class="solution-card">
-            <div class="solution-number">01</div>
-            <h3>You choose your interests</h3>
-            <p>Fashion, music, events, clubs, builds, shopping — pick what matters to you. You're in control from the start.</p>
-          </div>
-
-          <div class="solution-card">
-            <div class="solution-number">02</div>
-            <h3>You follow brands you love</h3>
-            <p>Follow any brand, creator, DJ or event organiser on InCynq. Their posts appear in your feed. Nothing else does.</p>
-          </div>
-
-          <div class="solution-card">
-            <div class="solution-number">03</div>
-            <h3>You only see what you chose</h3>
-            <p>Chronological. Noise-free. No algorithm, no hidden ranking, no surprises. Exactly what you followed — and only that.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
 
 
     <!-- =========================================================
