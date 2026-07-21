@@ -100,6 +100,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/prices.js"></script>
 
   <script type="module">
     import { TC_DATA } from './data/tcData.js';
@@ -148,27 +149,37 @@
     }
 
     const root = document.getElementById('tc-root');
-    let html = `<p class="legal-intro">${TC_DATA.intro}</p>`;
 
-    TC_DATA.sections.forEach(sec => {
-      html += `<h2>${sec.title}</h2>`;
-      html += renderContent(sec.content);
-    });
+    (async () => {
+      const P = window.InCynqPrices;
+      // Prices come from admin (app_content). Fallbacks stay if the fetch is blocked.
+      const tierTable = P ? await P.tierTableText() : '';
+      const sub = async (txt) => P ? await P.substitute(txt) : txt;
 
-    // Footer note
-    const footerLines = TC_DATA.footer.split('\n');
-    html += `<div class="legal-footer-note">`;
-    footerLines.forEach(line => {
-      const emailMatch = line.match(/[\w.+-]+@[\w.-]+\.\w+/);
-      if (emailMatch) {
-        html += `<p>${line.replace(emailMatch[0], `<a href="mailto:${emailMatch[0]}">${emailMatch[0]}</a>`)}</p>`;
-      } else {
-        html += `<p>${line}</p>`;
+      let html = `<p class="legal-intro">${await sub(TC_DATA.intro)}</p>`;
+
+      for (const sec of TC_DATA.sections) {
+        html += `<h2>${sec.title}</h2>`;
+        let content = sec.content.replace('{{AD_TIER_TABLE}}', tierTable);
+        content = await sub(content);
+        html += renderContent(content);
       }
-    });
-    html += `</div>`;
 
-    root.innerHTML = html;
+      // Footer note
+      const footerLines = TC_DATA.footer.split('\n');
+      html += `<div class="legal-footer-note">`;
+      footerLines.forEach(line => {
+        const emailMatch = line.match(/[\w.+-]+@[\w.-]+\.\w+/);
+        if (emailMatch) {
+          html += `<p>${line.replace(emailMatch[0], `<a href="mailto:${emailMatch[0]}">${emailMatch[0]}</a>`)}</p>`;
+        } else {
+          html += `<p>${line}</p>`;
+        }
+      });
+      html += `</div>`;
+
+      root.innerHTML = html;
+    })();
   </script>
 
 </body>

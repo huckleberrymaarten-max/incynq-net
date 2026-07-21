@@ -100,44 +100,56 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/prices.js"></script>
 
   <script type="module">
     import { QA_DATA } from './data/qaData.js';
 
     const root = document.getElementById('faq-root');
     const PART_LABELS = ['For residents', 'For brands'];
-    let html = '';
 
-    QA_DATA.forEach((part, pi) => {
-      html += `<div class="faq-part-title">${PART_LABELS[pi] || part.part}</div>`;
+    (async () => {
+      const P = window.InCynqPrices;
+      // Prices come from admin (app_content). Fallbacks stay if the fetch is blocked.
+      const tierInline = P ? await P.tierInlineText() : '';
+      const sub = async (txt) => {
+        let t = String(txt).replace('{{AD_TIER_INLINE}}', tierInline);
+        return P ? await P.substitute(t) : t;
+      };
 
-      part.sections.forEach(sec => {
-        html += `
-        <div class="faq-group">
-          <h2 class="faq-group-title">${sec.title}</h2>
-          <div class="faq-list">`;
+      let html = '';
 
-        sec.items.forEach(item => {
+      for (const [pi, part] of QA_DATA.entries()) {
+        html += `<div class="faq-part-title">${PART_LABELS[pi] || part.part}</div>`;
+
+        for (const sec of part.sections) {
           html += `
-            <details class="faq-item">
-              <summary class="faq-question">${item.q}<span class="faq-chevron">▾</span></summary>
-              <div class="faq-answer">${item.a}</div>
-            </details>`;
-        });
+          <div class="faq-group">
+            <h2 class="faq-group-title">${sec.title}</h2>
+            <div class="faq-list">`;
 
-        html += `
-          </div>
+          for (const item of sec.items) {
+            html += `
+              <details class="faq-item">
+                <summary class="faq-question">${await sub(item.q)}<span class="faq-chevron">▾</span></summary>
+                <div class="faq-answer">${await sub(item.a)}</div>
+              </details>`;
+          }
+
+          html += `
+            </div>
+          </div>`;
+        }
+      }
+
+      html += `
+        <div class="faq-still-stuck">
+          <h2>Still stuck?</h2>
+          <p>Use the <a href="contact.html">contact form</a> or email us at <a href="mailto:support@incynq.net">support@incynq.net</a> and we'll get back to you.</p>
         </div>`;
-      });
-    });
 
-    html += `
-      <div class="faq-still-stuck">
-        <h2>Still stuck?</h2>
-        <p>Use the <a href="contact.html">contact form</a> or email us at <a href="mailto:support@incynq.net">support@incynq.net</a> and we'll get back to you.</p>
-      </div>`;
-
-    root.innerHTML = html;
+      root.innerHTML = html;
+    })();
   </script>
 
 </body>

@@ -197,121 +197,109 @@
           </div>
         </div>
 
-        <!-- LAUNCH PROMO BANNER — auto-hides at 1,000 members -->
+        <!-- LAUNCH PROMO BANNER — driven by admin (app_content) -->
         <div class="promo-banner" id="launch-promo" style="display:none;">
           <div class="promo-banner-inner">
             <div class="promo-badge">🎉 Launch Offer</div>
             <div class="promo-text">
-              <strong>50% off all ad rates</strong> — until InCynq reaches 1,000 members. Lock in the lowest prices before they go up.
+              <strong><span id="promo-pct">50</span>% off all ad rates</strong> — until InCynq reaches <span id="promo-threshold">1,000</span> members. Lock in the lowest prices before they go up.
               <span class="promo-counter" id="promo-counter"></span>
             </div>
             <a href="https://incynq.app" class="btn btn-white promo-cta" target="_blank" rel="noopener">Claim now →</a>
           </div>
         </div>
 
+        <!-- Ad tier cards — rendered from admin pricing_tiers + promo -->
+        <div class="tiers-grid" id="tiers-grid"></div>
+
+        <p class="tiers-note">All prices are per week, starting from 1 interest group targeted. Pricing increases with more groups and scales automatically as the platform grows. Exact costs shown in-app at booking. Discounts available for 2–4 week runs.</p>
+
         <script>
         (async () => {
           const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enpqdmVneW5zZW1sc2J3Z2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjI5MDIsImV4cCI6MjA5MTU5ODkwMn0.AO2BgiecEKZvqCeZyJPZrS7AhOI6UsZTMHMvfXyAaXI';
+          const HDRS = { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON };
+          const SB = 'https://muzzjvegynsemlsbwggf.supabase.co';
+          const EMOJI = ['⚡','🚀','🏆','👑'];
+          const fmt = n => Number(n).toLocaleString();
+          const round50 = n => Math.round(n / 50) * 50;
+
+          // Member count (excludes official / payments accounts)
+          let count = 0;
           try {
-            const res  = await fetch(
-              'https://muzzjvegynsemlsbwggf.supabase.co/rest/v1/profiles?select=id&activated=eq.true&username=not.in.(incynqpayments,incynqofficial)',
-              { headers: { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON, 'Prefer': 'count=exact', 'Range': '0-0' } }
-            );
-            const count = parseInt(res.headers.get('Content-Range')?.split('/')[1] || '0');
-            if (count < 1000) {
-              document.getElementById('launch-promo').style.display = 'block';
-              const remaining = 1000 - count;
-              document.getElementById('promo-counter').textContent = ' — ' + remaining + ' spot' + (remaining === 1 ? '' : 's') + ' left at this price.';
+            const r = await fetch(`${SB}/rest/v1/profiles?select=id&activated=eq.true&username=not.in.(incynqpayments,incynqofficial)`,
+              { headers: { ...HDRS, 'Prefer': 'count=exact', 'Range': '0-0' } });
+            count = parseInt(r.headers.get('Content-Range')?.split('/')[1] || '0');
+          } catch (e) {}
+
+          // Admin config: pricing tiers + promo
+          let tiers = [], promoActive = false, promoPct = 0, promoThreshold = null;
+          try {
+            const r = await fetch(`${SB}/rest/v1/app_content?key=in.(pricing_tiers,launch_promo_active,launch_promo_discount,launch_promo_threshold,launch_promo_start,launch_promo_end)&select=key,value`, { headers: HDRS });
+            const rows = await r.json();
+            const map = {};
+            (Array.isArray(rows) ? rows : []).forEach(x => map[x.key] = x.value);
+            try { tiers = JSON.parse(map.pricing_tiers || '[]'); } catch { tiers = []; }
+            promoPct = parseInt(map.launch_promo_discount, 10) || 0;
+            promoThreshold = map.launch_promo_threshold ? parseInt(map.launch_promo_threshold, 10) : null;
+            const start = map.launch_promo_start ? new Date(map.launch_promo_start) : null;
+            const end   = map.launch_promo_end   ? new Date(map.launch_promo_end)   : null;
+            const on = String(map.launch_promo_active).toLowerCase() === 'true';
+            const now = new Date();
+            promoActive = on && promoPct > 0
+              && !(start && !isNaN(start.getTime()) && now < start)
+              && !(end   && !isNaN(end.getTime())   && now > end)
+              && !(promoThreshold && count >= promoThreshold);
+          } catch (e) {}
+
+          if (!tiers.length) return; // graceful: leave section empty rather than show stale prices
+
+          const mult = promoActive ? Math.max(0, 1 - promoPct / 100) : 1;
+          const currentIdx = tiers.findIndex(t => count >= t.min && (t.max == null || count <= t.max));
+
+          const memberText = t => {
+            if (t.min === 0)   return `Under ${fmt((t.max ?? 0) + 1)} members on InCynq`;
+            if (t.max == null) return `${fmt(t.min)}+ members on InCynq`;
+            return `${fmt(t.min)} – ${fmt(t.max + 1)} members on InCynq`;
+          };
+
+          const priceRow = (name, base, isCurrent, teal) => {
+            const cls = teal ? 'tier-reach-val val-teal' : 'tier-reach-val';
+            if (isCurrent && promoActive) {
+              return `<div class="tier-reach-row"><span class="tier-reach-name">${name}</span>`
+                   + `<span class="${cls}">from <s class="price-strike">${fmt(base)}</s> <strong>${fmt(round50(base * mult))} L$/wk</strong></span></div>`;
             }
-          } catch(e) {
-            // On error show the banner anyway — safe default
+            return `<div class="tier-reach-row"><span class="tier-reach-name">${name}</span>`
+                 + `<span class="${cls}">from ${fmt(base)} L$/wk</span></div>`;
+          };
+
+          document.getElementById('tiers-grid').innerHTML = tiers.map((t, i) => {
+            const isCurrent = i === currentIdx;
+            return `<div class="tier-card${isCurrent ? ' tier-featured' : ''}">`
+              + (isCurrent ? `<div class="tier-badge">You are here now</div>` : '')
+              + `<div class="tier-emoji">${EMOJI[i] || '⚡'}</div>`
+              + `<div class="tier-name">${t.label}</div>`
+              + `<div class="tier-members">${memberText(t)}</div>`
+              + `<div class="tier-reaches">`
+                + priceRow('Basic', t.basic, isCurrent, false)
+                + priceRow('Featured', t.featured, isCurrent, false)
+                + priceRow('Premium', t.premium, isCurrent, true)
+              + `</div>`
+              + (isCurrent && promoActive ? `<p class="tier-note">${promoPct}% launch discount applied. Prices increase with more interest groups targeted.</p>` : '')
+              + `</div>`;
+          }).join('');
+
+          // Promo banner
+          if (promoActive) {
+            document.getElementById('promo-pct').textContent = promoPct;
+            if (promoThreshold) {
+              document.getElementById('promo-threshold').textContent = fmt(promoThreshold);
+              const remaining = promoThreshold - count;
+              if (remaining > 0) document.getElementById('promo-counter').textContent = ' — ' + remaining + ' spot' + (remaining === 1 ? '' : 's') + ' left at this price.';
+            }
             document.getElementById('launch-promo').style.display = 'block';
           }
         })();
         </script>
-
-        <div class="tiers-grid">
-          <div class="tier-card tier-featured">
-            <div class="tier-badge">You are here now</div>
-            <div class="tier-emoji">⚡</div>
-            <div class="tier-name">Launch</div>
-            <div class="tier-members">Under 500 members on InCynq</div>
-            <div class="tier-reaches">
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Basic</span>
-                <span class="tier-reach-val">from <s class="price-strike">250</s> <strong>125 L$/wk</strong></span>
-              </div>
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Featured</span>
-                <span class="tier-reach-val">from <s class="price-strike">750</s> <strong>375 L$/wk</strong></span>
-              </div>
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Premium</span>
-                <span class="tier-reach-val val-teal">from <s class="price-strike">1,500</s> <strong>750 L$/wk</strong></span>
-              </div>
-            </div>
-            <p class="tier-note">50% launch discount applied. Prices increase with more interest groups targeted.</p>
-          </div>
-          <div class="tier-card">
-            <div class="tier-emoji">🚀</div>
-            <div class="tier-name">Growth</div>
-            <div class="tier-members">500 – 2,000 members on InCynq</div>
-            <div class="tier-reaches">
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Basic</span>
-                <span class="tier-reach-val">from 500 L$/wk</span>
-              </div>
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Featured</span>
-                <span class="tier-reach-val">from 1,500 L$/wk</span>
-              </div>
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Premium</span>
-                <span class="tier-reach-val val-teal">from 3,000 L$/wk</span>
-              </div>
-            </div>
-          </div>
-          <div class="tier-card">
-            <div class="tier-emoji">🏆</div>
-            <div class="tier-name">Established</div>
-            <div class="tier-members">2,000 – 10,000 members on InCynq</div>
-            <div class="tier-reaches">
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Basic</span>
-                <span class="tier-reach-val">from 1,000 L$/wk</span>
-              </div>
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Featured</span>
-                <span class="tier-reach-val">from 3,000 L$/wk</span>
-              </div>
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Premium</span>
-                <span class="tier-reach-val val-teal">from 6,000 L$/wk</span>
-              </div>
-            </div>
-          </div>
-          <div class="tier-card">
-            <div class="tier-emoji">👑</div>
-            <div class="tier-name">Premium</div>
-            <div class="tier-members">10,000+ members on InCynq</div>
-            <div class="tier-reaches">
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Basic</span>
-                <span class="tier-reach-val">from 2,500 L$/wk</span>
-              </div>
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Featured</span>
-                <span class="tier-reach-val">from 7,500 L$/wk</span>
-              </div>
-              <div class="tier-reach-row">
-                <span class="tier-reach-name">Premium</span>
-                <span class="tier-reach-val val-teal">from 15,000 L$/wk</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <p class="tiers-note">All prices are per week, starting from 1 interest group targeted. Pricing increases with more groups and scales automatically as the platform grows. Exact costs shown in-app at booking. Discounts available for 2–4 week runs.</p>
       </div>
     </section>
 
