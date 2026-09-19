@@ -89,15 +89,25 @@
         return '&#127975; ATM';
       }
 
+      // The InCynq store landing point, set in admin → Content as
+      // incynq_hq_slurl. Fixed on purpose rather than taken from a device:
+      // devices re-register their own position every 60 minutes and write a
+      // SLURL one metre in front of themselves, which would land visitors at a
+      // terminal instead of inside the store. Partner locations still use their
+      // own device's SLURL. The value below is only a fallback if admin can't
+      // be reached.
+      let HQ_SLURL = 'https://maps.secondlife.com/secondlife/Redlion/219/13/41';
+
       function makeCard(loc, isHQ) {
         const name = isHQ ? 'InCynq Main Store &mdash; ' + loc.region : loc.region;
-        const hasSlurl = !!loc.slurl;
+        const slurl = isHQ ? HQ_SLURL : loc.slurl;
+        const hasSlurl = !!slurl;
         return '<div class="location-card">'
           + '<div class="location-type">' + typeLabel(loc.types) + '</div>'
           + '<div class="location-name">' + name + '</div>'
           + '<div class="location-region">' + loc.region + '</div>'
           + (hasSlurl
-            ? '<a href="' + loc.slurl + '" class="device-slurl">Teleport inworld &rarr;</a>'
+            ? '<a href="' + slurl + '" class="device-slurl">Teleport inworld &rarr;</a>'
             : '<span class="device-slurl" style="opacity:0.5;pointer-events:none;">Opening soon</span>')
           + '</div>';
       }
@@ -117,11 +127,24 @@
         + '</div>';
 
       try {
-        const res = await fetch(
-          SUPABASE_URL + '/rest/v1/inworld_devices?active=eq.true&select=device_type,region,slurl,owner_avatar_name,friendly_id&order=friendly_id.asc',
-          { headers: { apikey: ANON_KEY, Authorization: 'Bearer ' + ANON_KEY } }
-        );
+        // Both in one go: the devices, and the admin-set store landing point.
+        const [res, slurlRes] = await Promise.all([
+          fetch(
+            SUPABASE_URL + '/rest/v1/inworld_devices?active=eq.true&select=device_type,region,slurl,owner_avatar_name,friendly_id&order=friendly_id.asc',
+            { headers: { apikey: ANON_KEY, Authorization: 'Bearer ' + ANON_KEY } }
+          ),
+          fetch(
+            SUPABASE_URL + '/rest/v1/app_content?key=eq.incynq_hq_slurl&select=value',
+            { headers: { apikey: ANON_KEY, Authorization: 'Bearer ' + ANON_KEY } }
+          ),
+        ]);
         const devices = await res.json();
+
+        // Keep the fallback if admin has no value set, or the fetch is blocked.
+        try {
+          const rows = await slurlRes.json();
+          if (Array.isArray(rows) && rows[0] && rows[0].value) HQ_SLURL = rows[0].value;
+        } catch (e) {}
 
         const hqDevices      = devices.filter(d => (d.owner_avatar_name || '').toLowerCase().includes('incynqpayments'));
         const partnerDevices = devices.filter(d => !(d.owner_avatar_name || '').toLowerCase().includes('incynqpayments'));
