@@ -225,4 +225,81 @@ export const QA_DATA = [
       },
     ],
   },
+  {
+    part: "Part Three — DJs & Live Performers",
+    partDesc: "For DJs, musicians and live acts broadcasting inside InCynq",
+    sections: [
+      {
+        title: "Getting Started",
+        items: [
+          { q: "What is a DJ / Live Performer account?", a: "It's your own identity on InCynq, separate from your personal account. Your stage name, your @handle, your followers, your own airtime balance and your own tip jar. You post as the artist, not as yourself — and when you go live, your followers hear about it." },
+          { q: "How much does it cost to become a DJ or performer?", a: "{{performer_activation_price}} L$ to activate. That's not a fee that disappears — the whole amount lands in your airtime credit, which at {{broadcast_hour_price}} L$ an hour is your first 10 hours on air." },
+          { q: "How do I set one up?", a: "In the app, add a DJ / Live Performer the same way you'd add a brand. Fill in your stage name, what you do, your genres and your stream URL, then pay the activation at an InCynq ATM inworld. Your identity goes live as soon as the payment lands." },
+          { q: "Do I need to activate at a Terminal first?", a: "Yes, and this one matters. Your payouts go to the Second Life avatar captured when you activate at a Terminal — that's how we know which avatar to send your tips to. No Terminal activation, no avatar on file, and we have nothing to pay into. Do it before your first gig, not after." },
+          { q: "Can I have a DJ identity AND a brand?", a: "Not on one slot. Every account comes with one brand-type identity, and that slot can be a brand or a performer. If you already run a brand and want a DJ identity too, get in touch via the contact form and we'll add a second slot for you. It's free, it's just not self-service — we do it by hand." },
+          { q: "Can I change what's on my performer profile?", a: "Yes, any time, free. Your bio, genres, stream URL, home SLurl, sample link, photo and performer type are all editable from your performer dashboard. The one thing you can't change yourself is your stage name — see 'Changing your stage name' below." },
+        ],
+      },
+      {
+        title: "Airtime",
+        items: [
+          { q: "What is airtime?", a: "Broadcasting time. You hold a balance of hours and you spend them by going live. Activation gives you 10 hours to start, and you top up whenever you need more at {{broadcast_hour_price}} L$ an hour." },
+          { q: "How is airtime actually charged?", a: "By the minute, rounded up, for the time you were genuinely on air. You don't book a slot or declare a set length in advance — you go live, you play, you end the set, and only what you used comes off your balance." },
+          { q: "What happens if I run out mid-set?", a: "You can't start a set without airtime, and a session is capped at the hours you're holding — so it'll end rather than run up a bill you didn't agree to. Top up before a long night and you'll never meet the cap." },
+          { q: "What if my connection drops?", a: "You're billed to your last heartbeat, not to whenever we noticed. If your stream or your app dies mid-set, the session closes itself and charges what you actually broadcast. You don't pay for a set you weren't playing." },
+          { q: "Can I get a refund on airtime credit?", a: "No. Airtime credit is non-refundable, like every InCynq wallet — it buys broadcasting, not a balance you can cash out. Only top up what you intend to use." },
+          { q: "What else can airtime credit buy?", a: "Promotion for your gigs — event boosts and ads, the same options brands have. It's one spend balance for everything on the performer side." },
+        ],
+      },
+      {
+        title: "Going Live",
+        items: [
+          { q: "How do I go live?", a: "Create your event, add your stream URL, and tap Go Live when it's time. Your stream plays inside InCynq, a 🔴 LIVE badge appears on your profile and your gig, and your followers get a notification that you're on air." },
+          { q: "Do I need my own stream?", a: "Yes. Bring your own stream URL — whatever you already use to broadcast in Second Life. InCynq plays it to your audience; it doesn't host it for you." },
+          { q: "Who sees that I'm live?", a: "Your followers see you in their feed, because that's their feed and you're someone they chose. Everyone else finds you in Events, where every live gig is listed — they can listen there and follow you from it. That's how a new listener becomes a follower." },
+          { q: "Can I see who's listening?", a: "Yes. You get a live listener count while you play, and your peak and total listeners are kept on the session afterwards, so you can see how a gig actually went." },
+          { q: "Does my stream URL get exposed?", a: "No. The events list never returns it. It's handed to signed-in listeners only, and only while you're actually live." },
+          { q: "What happens when I end the set?", a: "Airtime stops, your gig moves to your history, and the tip window on that gig closes out in the normal way. Ended events clear themselves off the board after 24 hours." },
+        ],
+      },
+      {
+        title: "Tips",
+        items: [
+          { q: "How do tips work?", a: "Anyone listening can tip you from their InCynq wallet while you're live. It lands in your tip earnings — which is a different pot from your airtime credit, and the only money that ever leaves InCynq as real L$." },
+          { q: "Can someone tip more than once in a gig?", a: "Yes, as often as they like. A tip jar gets hit several times a night in Second Life and we weren't going to cap that at one. There's a short cooldown between tips to stop accidental double-taps, and that's all." },
+          { q: "What does InCynq take?", a: "{{tip_platform_cut_pct}}% of each tip, as a handling fee. It covers holding your tips, working out what you're owed and getting it to your avatar. We take it on tips only — never on your airtime, never on your activation, never on anything you top up." },
+          { q: "Why can't a friend tip me with their welcome credit?", a: "Because we gave them that credit — nobody paid it in. If promotional credit could be tipped, InCynq would be funding your tips out of its own pocket, which isn't a tip. Welcome credit still buys everything else: boosts, ads, airtime. Tips have to be money someone actually put in." },
+          { q: "Are my airtime credit and my tip earnings the same balance?", a: "No, and they never mix. Airtime credit is what you spend on InCynq and it's non-refundable. Tip earnings are what your audience gave you, and that's yours to be paid out. One goes in, the other comes out." },
+        ],
+      },
+      {
+        title: "Getting Paid",
+        items: [
+          { q: "When do I get paid?", a: "Each tip is held for 7 days, then goes into the next payout run. Payouts go out weekly — one payment per DJ, covering everything that's cleared. Play three nights in a week and you get one transfer, not three." },
+          { q: "Why hold tips for 7 days?", a: "It's the window where a disputed gig can still be sorted out while a refund is possible. After it closes, the money is yours and on its way." },
+          { q: "How does the money reach me?", a: "As real L$ to your Second Life avatar, sent from the IncynqPayments avatar inworld. Second Life doesn't let a website push Linden dollars on its own — someone has to send them — so a person at InCynq pays each run by hand and records it. At our size that's a feature: every payment is looked at by a human." },
+          { q: "Which avatar gets paid?", a: "The avatar that activated the account at a Terminal, by its UUID rather than its name. Display names change; UUIDs don't. It means there's never a question about which DJ Max was meant." },
+          { q: "Where can I see what I'm owed?", a: "On your performer profile. You can see tips still inside their hold window, what's cleared and due in the next run, and every payment you've already had." },
+        ],
+      },
+      {
+        title: "Changing Your Name & Leaving",
+        items: [
+          { q: "Can I change my stage name?", a: "Yes — DJs rebrand, that's normal. It costs the same as activating, {{performer_activation_price}} L$. Get in touch through the contact page and pick 'DJ / Live Performer'; we'll set up a payment code for you, and the name changes once it's paid." },
+          { q: "What happens to my followers if I rebrand?", a: "You keep everything — followers, posts, gig history and your airtime credit. Only the name changes, and your @handle updates to match it. Old links to your previous handle stop working, which is the trade-off for a clean rebrand." },
+          { q: "Does the rebrand fee go into my airtime credit?", a: "No — that's the one difference from activation. Activation gives you the full amount back as airtime. A rebrand is just a fee for the work." },
+          { q: "Can a brand rebrand too?", a: "No. A brand is a brand. Rebranding is a DJ and performer thing, because stage names genuinely change." },
+          { q: "If I delete my account, do I lose the tips I've earned?", a: "No. Deleting has a cool-off period that's longer than the 7-day tip hold, so everything you've earned is paid out to your avatar during it, before the account actually closes. You never lose money you earned by leaving." },
+          { q: "What happens to my airtime credit if I delete?", a: "It's not refunded — spend credit never is. If what you really want is a different name, rebranding keeps your credit and your following, so it's almost always the better move." },
+        ],
+      },
+      {
+        title: "Contact & Support",
+        items: [
+          { q: "How do I get help as a DJ or performer?", a: "Use the contact form at incynq.net/contact.html and select 'DJ / Live Performer'. Stage name changes, extra identity slots, payout questions — all of it goes there. We aim to reply within 48–72 hours on working days." },
+          { q: "My payout hasn't arrived — what do I do?", a: "Check your performer profile first: if it's still inside the 7-day hold it isn't due yet. If it's cleared and the run has been and gone, get in touch and we'll look. Payments are made by hand, so we can tell you exactly what happened to yours." },
+        ],
+      },
+    ],
+  },
 ];
