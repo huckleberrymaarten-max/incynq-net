@@ -18,7 +18,9 @@
     'brand_activation_fee','sub_brand_slot_fee','performer_activation_price',
     'broadcast_hour_price','tip_platform_cut_pct','welcome_credit',
     'welcome_credit_expiry_days','referral_reward','referral_monthly_limit','survey_reward',
-    'cynqified_fee','dashboard_upgrade_monthly','dashboard_upgrade_annual',
+    'cynqified_fee','cynqified_fee_resident',
+    'dashboard_upgrade_monthly','dashboard_upgrade_annual',
+    'max_pause_days',
     'pricing_tiers'
   ];
 
