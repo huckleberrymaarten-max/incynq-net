@@ -170,9 +170,11 @@ export const QA_DATA = [
         ],
       },
       {
-        title: "Cynqified Brand Verification",
+        title: "Cynqified Verification",
         items: [
-          { q: "What is the Cynqified badge?", a: "The ⚡ Cynqified badge is InCynq's brand verification. It tells the community you have been manually reviewed and confirmed as a legitimate Second Life brand. It shows on your profile, your posts, and your ads." },
+          { q: "What is the Cynqified badge?", a: "The ⚡ Cynqified badge means InCynq has manually checked an account and confirmed it's genuinely who it says it is. It shows on the profile, on posts, and on ads." },
+          { q: "Is it only for brands?", a: "No. Brands and DJ / Live Performers can be verified at {{cynqified_fee}} L$ — that's a commercial identity, confirming this really is that shop or that performer. Residents can be verified too, at {{cynqified_fee_resident}} L$ — that one is simply about being you, so nobody can pretend to be you." },
+          { q: "I'm verified as a resident — is my brand verified too?", a: "No, they're checked separately. Verifying you as a person confirms who you are; verifying a brand or a stage name confirms that identity belongs to you. They're different questions, so each one is reviewed on its own." },
           { q: "How do I apply?", a: "Settings → Get Cynqified. Fill in your SL location or Marketplace URL, a description of your brand, and how long you have been in Second Life. The {{cynqified_fee}} L$ application fee is charged on submission. We review within 24–48 hours." },
           { q: "Is the fee refundable if rejected?", a: "No. The {{cynqified_fee}} L$ is non-refundable whether approved or rejected. Make sure your application is complete and accurate before submitting." },
           { q: "What does Cynqified mean to members?", a: "It tells them your brand has been manually checked by InCynq and is the real deal. It is not an endorsement of your products or services — just confirmation that you are who you say you are." },
@@ -212,6 +214,26 @@ export const QA_DATA = [
           { q: "What emails do brand accounts receive?", a: "Account emails (suspension notices, billing confirmations) always come through. Optional emails include: Ad Performance Reports (weekly reach summary) and Billing & Wallet (top-up reminders, Dashboard renewal reminders). Both are on by default and individually toggleable in Settings." },
           { q: "Can I turn off billing emails?", a: "Yes. Settings → Email → Billing & Wallet. Toggle it off. Just be aware you won't get top-up reminders if your wallet runs low or Dashboard renewal reminders." },
           { q: "Where do Dashboard renewal reminders go?", a: "Both in-app (as a system notification in your bell) and optionally by email if Billing & Wallet emails are on. You get one 7 days before renewal, one 3 days before, and a confirmation on the day it charges." },
+        ],
+      },
+      {
+        title: "Your Links",
+        items: [
+          { q: "Where do I add my store, Marketplace and website links?", a: "In Edit Brand Profile. Add them once and they're there for every ad you run — no retyping. They show on your brand profile too, so they're worth filling in even if you never advertise." },
+          { q: "Can I link to my website from an ad?", a: "Yes. Add it in Edit Brand Profile and we'll check it before it goes live — usually a day or two. After that you can use it as a button on any ad." },
+          { q: "Why do you check website links?", a: "A SLurl or a Marketplace link can only ever take someone to Second Life — we can see that from the address itself. A website could go anywhere, so a real person has a look first. It's the only way we can promise residents that a button on InCynq is safe to tap." },
+          { q: "Why was my website turned down?", a: "We'll tell you why on the Edit Brand Profile screen, so you can fix it and try again. The usual reasons: it doesn't load, it isn't https, it's a link shortener, it's not Second Life related, or it isn't yours." },
+          { q: "I changed my website and now it says pending again — why?", a: "Every website gets checked, including a new one replacing an old one. Your previous website keeps working on your ads while we look at the new one, so nothing goes dark in between." },
+          { q: "How many links can one ad have?", a: "Up to two, picked from the ones you've saved. One clear destination usually works better than two." },
+        ],
+      },
+      {
+        title: "Running Your Ads",
+        items: [
+          { q: "Can I pause an ad?", a: "Yes. Pausing stops it being shown and keeps the days you've paid for — start it again whenever you like and it picks up where it left off. You can bank up to 30 days that way." },
+          { q: "What happens if I delete a running ad?", a: "It stops straight away and the days left on it are gone — there's no refund. If you only want to stop it for a while, pause it instead and you keep everything." },
+          { q: "Why don't you refund the unused days instead?", a: "Because longer bookings are discounted — four weeks costs about half the weekly rate. Refunding unused weeks would make cancelling cheaper than booking a single week properly. Pausing gives you the time back instead, which is fairer all round." },
+          { q: "How do I know if anyone saw my ad?", a: "Every ad shows how many times it was seen, how many people saw it, and how it's done in the last 7 days. It's on the ad card in the Advertise section." },
         ],
       },
       {
