@@ -3,14 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InCynq — Connect with what matters</title>
-  <meta name="description" content="The revolutionary way to follow Second Life brands, creators and events — without the noise.">
+  <title>InCynq — Follow Second Life Brands Without the Noise</title>
+  <meta name="description" content="Follow the Second Life brands, creators, DJs and events you love. No group spam, no algorithm, no inbox chaos — just what matters to you. Free for residents.">
+  <link rel="canonical" href="https://incynq.net/">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="InCynq — Connect with what matters">
-  <meta property="og:description" content="The revolutionary way to follow Second Life brands, creators and events — without the noise.">
-  <meta property="og:url" content="https://incynq.net">
+  <!-- Social sharing (Open Graph + Twitter/X) -->
+  <meta property="og:site_name" content="InCynq">
   <meta property="og:type" content="website">
+  <meta property="og:title" content="InCynq — Follow Second Life Brands Without the Noise">
+  <meta property="og:description" content="Follow the Second Life brands, creators, DJs and events you love. No group spam, no algorithm, no inbox chaos — just what matters to you. Free for residents.">
+  <meta property="og:url" content="https://incynq.net/">
+  <meta property="og:image" content="https://incynq.net/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="InCynq — Connect with what matters">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="InCynq — Follow Second Life Brands Without the Noise">
+  <meta name="twitter:description" content="Follow the Second Life brands, creators, DJs and events you love. No group spam, no algorithm, no inbox chaos — just what matters to you. Free for residents.">
+  <meta name="twitter:image" content="https://incynq.net/assets/og-image.jpg">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://incynq.net/#organization",
+        "name": "InCynq",
+        "url": "https://incynq.net/",
+        "logo": "https://incynq.net/assets/q-logo.png",
+        "slogan": "Connect with what matters.",
+        "description": "A social platform for Second Life residents to follow the brands, creators, DJs and events they care about — without group spam.",
+        "email": "support@incynq.net",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "support@incynq.net",
+          "url": "https://incynq.net/contact"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://incynq.net/#website",
+        "name": "InCynq",
+        "url": "https://incynq.net/",
+        "publisher": {
+          "@id": "https://incynq.net/#organization"
+        },
+        "inLanguage": "en"
+      }
+    ]
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +97,7 @@
     <div class="container nav-container">
 
       <a href="/" class="nav-logo" aria-label="InCynq home">
-        <img src="assets/q-logo.png" alt="" class="logo-img" aria-hidden="true">
+        <img src="assets/q-logo.png" alt="InCynq logo" class="logo-img">
         <span class="logo-text">InCynq</span>
       </a>
 
@@ -559,7 +604,7 @@
 
       <div class="footer-brand">
         <a href="/" class="nav-logo" aria-label="InCynq home">
-          <img src="assets/q-logo.png" alt="" class="logo-img" aria-hidden="true">
+          <img src="assets/q-logo.png" alt="InCynq logo" class="logo-img">
           <span class="logo-text">InCynq</span>
         </a>
         <p class="footer-tagline">Connect with what matters.</p>

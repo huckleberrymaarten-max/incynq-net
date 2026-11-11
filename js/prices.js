@@ -21,6 +21,7 @@
     'cynqified_fee','cynqified_fee_resident',
     'dashboard_upgrade_monthly','dashboard_upgrade_annual',
     'max_pause_days',
+    'boost_price_basic','boost_price_featured','boost_price_premium',
     'pricing_tiers'
   ];
 
