@@ -950,6 +950,16 @@ body {
   color: var(--text-light);
   line-height: 1.5;
 }
+.footer-bottom .footer-group {
+  margin-bottom: 6px;
+  color: var(--text-muted);
+}
+.footer-group a {
+  color: var(--text-muted);
+  font-weight: 600;
+  transition: color 0.18s;
+}
+.footer-group a:hover { color: var(--teal); }
 
 
 /* ============================================================
