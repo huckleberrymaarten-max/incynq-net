@@ -949,6 +949,7 @@ body {
   font-size: 12px;
   color: var(--text-light);
   line-height: 1.5;
+  text-align: center;
 }
 .footer-bottom .footer-group {
   margin-bottom: 6px;
